@@ -2,10 +2,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.example.zihan.grid.GameView
-        android:id="@+id/gameView"
-        android:layout_height="match_parent"
+    <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
         >
-    </com.example.zihan.grid.GameView>
+        <com.example.zihan.grid.GameView
+            android:id="@+id/gameView"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            >
+        </com.example.zihan.grid.GameView>
+    </RelativeLayout>
+
 </LinearLayout>
