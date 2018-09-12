@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <com.example.zihan.grid.GameView
+        android:id="@+id/gameView"
+        android:layout_height="350dp"
+        android:layout_width="match_parent"
+        app:square_color="@color/squareColor"
+        app:square_size="@dimen/square_size"
+        >
+
+    </com.example.zihan.grid.GameView>
+    <Button
+        android:id="@+id/btn_swap_color"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/gameView"
+        android:text="Swap Color">
+
+    </Button>
+    <!--<Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="关卡模式"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:onClick="chapterMode"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="无限模式"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:onClick="endlessMode"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="游戏说明"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:onClick="instruction"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="关于作者"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:onClick="aboutMe"
+        />-->
+</LinearLayout>
