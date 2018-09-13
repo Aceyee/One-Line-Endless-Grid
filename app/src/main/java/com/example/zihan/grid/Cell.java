@@ -22,8 +22,6 @@ public class Cell extends FrameLayout {
         init();
     }
 
-
-
     public Cell(Context context, int i, int j, int width) {
         super(context);
 
@@ -41,5 +39,12 @@ public class Cell extends FrameLayout {
         LayoutParams lp = new LayoutParams(-1, -1);
         lp.setMargins(10,10,0,0);
         addView(view, lp);
+    }
+
+    public boolean equals(Cell obj) {
+        if(this.i==obj.i && this.j==obj.j){
+            return true;
+        }
+        return false;
     }
 }

@@ -90,6 +90,14 @@ public class GameView extends GridLayout{
                         startY = event.getY();
                         jindex= getIndexJ(startX);
                         iindex= getIndexI(startY);
+                        if(arrayList.contains(cells[iindex][jindex])) {
+                            cells[iindex][jindex].view.setBackgroundColor(selectedColor);
+                            cells[iindex][jindex].visited = true;
+                            if(checkComplete()){
+                                Log.d(TAG, "onTouch: 过关！");
+                            }
+                            addAdjacent(iindex,jindex);
+                        }
 //                        Log.d(TAG, "onClick: "+startX+" "+startY);
 //                        Log.d(TAG, "onClick: "+iindex+" "+jindex);
 //                        Log.d(TAG, "onClick: "+v.getTop()+" "+v.getLeft()+" "+v.getRight()+" "+v.getBottom());
@@ -114,6 +122,20 @@ public class GameView extends GridLayout{
             }
         });
     }
+
+    private boolean checkComplete() {
+        for (int i=0; i<numRows;i++){
+            for (int j=0; j<numCols; j++){
+                if(!cells[i][j].visited){
+                    return false;
+//                    Log.d(TAG, "checkComplete: false");
+                }
+            }
+        }
+        return true;
+//        Log.d(TAG, "checkComplete: true");
+    }
+
     private void addAdjacent(int i, int j){
         arrayList = new ArrayList<>();
         if(isValidCell(i-1,j)){
@@ -124,7 +146,6 @@ public class GameView extends GridLayout{
         }
         if(isValidCell(i,j+1)){
             arrayList.add(cells[i][j+1]);
-            Log.d(TAG, "addAdjacent: "+arrayList.get(0).i);
         }
         if(isValidCell(i+1,j)){
             arrayList.add(cells[i+1][j]);
@@ -145,6 +166,8 @@ public class GameView extends GridLayout{
         numCols=4;
         cells[0][0].view.setBackgroundColor(selectedColor);
         cells[2][3].view.setBackgroundColor(selectedColor);
+        cells[0][0].visited=true;
+        cells[2][3].visited=true;
         currentCell = cells[0][0];
         addAdjacent(currentCell.i, currentCell.j);
         /*
