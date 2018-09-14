@@ -15,11 +15,13 @@ import java.util.ArrayList;
 public class GameView extends GridLayout{
     Cell [][] cells = new Cell[3][4];
     Cell currentCell;
+    int cellColor = 0xffeee4da;
     int defaultColor = 0xffbbadc0;
     int selectedColor = 0xffccc4da;
     private int numRows;
     private int numCols;
     private ArrayList<Cell> arrayList;
+    private ArrayList<Cell> stack;
     String TAG="";
     private int maxIndex=10;
 
@@ -93,8 +95,20 @@ public class GameView extends GridLayout{
                         if(arrayList.contains(cells[iindex][jindex])) {
                             cells[iindex][jindex].view.setBackgroundColor(selectedColor);
                             cells[iindex][jindex].visited = true;
+                            stack.add(cells[iindex][jindex]);
                             if(checkComplete()){
                                 Log.d(TAG, "onTouch: 过关！");
+                            }
+                            addAdjacent(iindex,jindex);
+                        }else if(stack.contains(cells[iindex][jindex])){
+                            for(int i=stack.size()-1; i>=0;i--){
+                                if(stack.get(i).equals(cells[iindex][jindex])){
+                                    break;
+                                }else{
+                                    cells[stack.get(i).i][stack.get(i).j].visited=false;
+                                    cells[stack.get(i).i][stack.get(i).j].view.setBackgroundColor(cellColor);
+                                    stack.remove(i);
+                                }
                             }
                             addAdjacent(iindex,jindex);
                         }
@@ -108,7 +122,26 @@ public class GameView extends GridLayout{
                         offsetY = event.getY();
                         jindex= getIndexJ(offsetX);
                         iindex= getIndexI(offsetY);
-
+                        if(arrayList.contains(cells[iindex][jindex])) {
+                            cells[iindex][jindex].view.setBackgroundColor(selectedColor);
+                            cells[iindex][jindex].visited = true;
+                            stack.add(cells[iindex][jindex]);
+                            if(checkComplete()){
+                                Log.d(TAG, "onTouch: 过关！");
+                            }
+                            addAdjacent(iindex,jindex);
+                        }else if(stack.contains(cells[iindex][jindex])){
+                            for(int i=stack.size()-1; i>=0;i--){
+                                if(stack.get(i).equals(cells[iindex][jindex])){
+                                    break;
+                                }else{
+                                    cells[stack.get(i).i][stack.get(i).j].visited=false;
+                                    cells[stack.get(i).i][stack.get(i).j].view.setBackgroundColor(cellColor);
+                                    stack.remove(i);
+                                }
+                            }
+                            addAdjacent(iindex,jindex);
+                        }
                         //cells[iindex][jindex].view.setBackgroundColor(selectedColor);
                         //cells[iindex][jindex].visited = true;
 //                        Log.d(TAG, "onClick: "+startX+" "+startY);
@@ -164,6 +197,8 @@ public class GameView extends GridLayout{
     private void startGame() {
         numRows=3;
         numCols=4;
+        stack=new ArrayList<>();
+        stack.add(cells[0][0]);
         cells[0][0].view.setBackgroundColor(selectedColor);
         cells[2][3].view.setBackgroundColor(selectedColor);
         cells[0][0].visited=true;
