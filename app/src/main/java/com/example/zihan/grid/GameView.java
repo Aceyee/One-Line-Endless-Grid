@@ -1,6 +1,8 @@
 package com.example.zihan.grid;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -41,7 +43,14 @@ public class GameView extends GridLayout{
         this.numRows=3;
         this.numCols=4;
         if(attrs==null) {
+//            cellColor = 0xffeee4da;
+//            defaultColor = 0xffbbadc0;
+//            selectedColor = 0xffccc4da;
         }else{
+            //Log.d(TAG, "initGame: "+attrs.getAttributeResourceValue());
+            cellColor = getResources().getColor(R.color.cellColor);
+            defaultColor = getResources().getColor(R.color.defaultColor);
+            selectedColor = getResources().getColor(R.color.selectedColor);
         }
         setBackgroundGrid();
         GridGenerator gg = new GridGenerator(getContext(), this.numRows, this.numCols);

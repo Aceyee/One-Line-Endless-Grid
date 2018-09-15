@@ -14,7 +14,6 @@ public class Cell extends FrameLayout {
     public int j;
     public boolean visited;
 
-
     public Cell(Context context) {
         super(context);
         init();
@@ -22,7 +21,6 @@ public class Cell extends FrameLayout {
 
     public Cell(Context context, int i, int j) {
         super(context);
-
         this.i = i;
         this.j = j;
         init();
@@ -31,7 +29,7 @@ public class Cell extends FrameLayout {
     private void init() {
         this.visited=false;
         view = new View(getContext());
-        view.setBackgroundColor(0xffeee4da);
+        view.setBackgroundColor(getResources().getColor(R.color.cellColor));
         LayoutParams lp = new LayoutParams(-1, -1);
         lp.setMargins(10,10,0,0);
         addView(view, lp);

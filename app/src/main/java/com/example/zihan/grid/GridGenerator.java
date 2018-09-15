@@ -30,6 +30,5 @@ public class GridGenerator {
             }
         }
         start = new Cell(context, 0, 0);
-
     }
 }
