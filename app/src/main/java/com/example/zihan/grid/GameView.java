@@ -1,8 +1,6 @@
 package com.example.zihan.grid;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -13,8 +11,8 @@ import android.widget.GridLayout;
 import java.util.ArrayList;
 
 public class GameView extends GridLayout{
-    Cell [][] cells = new Cell[3][4];
-    Cell currentCell;
+    Cell [][] cells;
+    Cell startCell;
     int cellColor = 0xffeee4da;
     int defaultColor = 0xffbbadc0;
     int selectedColor = 0xffccc4da;
@@ -23,7 +21,6 @@ public class GameView extends GridLayout{
     private ArrayList<Cell> arrayList;
     private ArrayList<Cell> stack;
     String TAG="";
-    private int maxIndex=10;
 
     public GameView(Context context) {
         super(context);
@@ -41,44 +38,24 @@ public class GameView extends GridLayout{
     }
 
     private void initGame(AttributeSet attrs) {
-        setBackgroundGrid();
+        this.numRows=3;
+        this.numCols=4;
         if(attrs==null) {
         }else{
         }
+        setBackgroundGrid();
+        GridGenerator gg = new GridGenerator(getContext(), this.numRows, this.numCols);
+        this.cells = gg.grid;
+        this.startCell = gg.start;
         setColumnCount(cells[0].length);
         for(int i=0; i<cells.length; i++){
             for(int j=0; j<cells[0].length; j++){
-                Cell c = new Cell(getContext(), i, j, GetCellWidth());
-                cells[i][j] = c;
-                addView(c, GetCellWidth(), GetCellWidth());
+                addView(cells[i][j], GetCellWidth(), GetCellWidth());
             }
         }
         startGame();
     }
-    private int getIndexI(float n){
-        int cellWidth = GetCellWidth();
-        int index=0;
-        for(int i=0; i<numRows; i++){
-            if(n>i*cellWidth){
-                index = i;
-            }else{
-                break;
-            }
-        }
-        return index;
-    }
-    private int getIndexJ(float n){
-        int cellWidth = GetCellWidth();
-        int index=0;
-        for(int i=0; i<numCols; i++){
-            if(n>i*cellWidth){
-                index = i;
-            }else{
-                break;
-            }
-        }
-        return index;
-    }
+
     private void getGesture(){
         setOnTouchListener(new OnTouchListener() {
             private float startX, startY, offsetX, offsetY;
@@ -148,12 +125,37 @@ public class GameView extends GridLayout{
 //                        Log.d(TAG, "onClick: "+iindex+" "+jindex);
                         break;
                     case MotionEvent.ACTION_UP:
-
                         break;
                 }
                 return true;
             }
         });
+    }
+
+    private int getIndexI(float n){
+        int cellWidth = GetCellWidth();
+        int index=0;
+        for(int i=0; i<numRows; i++){
+            if(n>i*cellWidth){
+                index = i;
+            }else{
+                break;
+            }
+        }
+        return index;
+    }
+
+    private int getIndexJ(float n){
+        int cellWidth = GetCellWidth();
+        int index=0;
+        for(int i=0; i<numCols; i++){
+            if(n>i*cellWidth){
+                index = i;
+            }else{
+                break;
+            }
+        }
+        return index;
     }
 
     private boolean checkComplete() {
@@ -184,6 +186,7 @@ public class GameView extends GridLayout{
             arrayList.add(cells[i+1][j]);
         }
     }
+
     private boolean isValidCell(int i, int j){
         if(i>=0 && i<numRows){
             if(j>=0 && j<numCols){
@@ -194,17 +197,13 @@ public class GameView extends GridLayout{
         }
         return false;
     }
+
     private void startGame() {
-        numRows=3;
-        numCols=4;
         stack=new ArrayList<>();
         stack.add(cells[0][0]);
         cells[0][0].view.setBackgroundColor(selectedColor);
-        cells[2][3].view.setBackgroundColor(selectedColor);
         cells[0][0].visited=true;
-        cells[2][3].visited=true;
-        currentCell = cells[0][0];
-        addAdjacent(currentCell.i, currentCell.j);
+        addAdjacent(startCell.i, startCell.j);
         /*
         for(int i=0; i<arrayList.size();i++) {
             Log.d(TAG, "startGame: " + arrayList.get(i).i+" "+arrayList.get(i).j);
@@ -216,6 +215,7 @@ public class GameView extends GridLayout{
     private void setBackgroundGrid() {
         setBackgroundColor(defaultColor);
     }
+
     private int GetCellWidth() {
         DisplayMetrics displayMetrics;
         displayMetrics = getResources().getDisplayMetrics();
