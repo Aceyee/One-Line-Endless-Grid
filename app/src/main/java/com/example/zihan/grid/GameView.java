@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridLayout;
@@ -56,10 +57,12 @@ public class GameView extends GridLayout{
         GridGenerator gg = new GridGenerator(getContext(), this.numRows, this.numCols);
         this.cells = gg.grid;
         this.startCell = gg.start;
+        ModelCell [][]mc = gg.modelCells;
         setColumnCount(cells[0].length);
         for(int i=0; i<cells.length; i++){
             for(int j=0; j<cells[0].length; j++){
-                addView(cells[i][j], GetCellWidth(), GetCellWidth());
+                //addView(cells[i][j], GetCellWidth(), GetCellWidth());
+                addView(mc[i][j], GetCellWidth(), GetCellWidth());
             }
         }
         startGame();
