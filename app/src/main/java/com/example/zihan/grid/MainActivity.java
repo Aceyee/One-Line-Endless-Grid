@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
+    GameView gameView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     public void chapterMode(View view) {
         Log.d("","chapter");
         setContentView(R.layout.activity_game);
+        gameView = findViewById(R.id.gameView);
     }
 
     public void endlessMode(View view) {
@@ -28,5 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void instruction(View view) {
         Log.d("","instruction");
+    }
+
+    public void Next(View view) {
+        gameView.startGame();
     }
 }

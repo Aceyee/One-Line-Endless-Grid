@@ -1,7 +1,6 @@
 package com.example.zihan.grid;
 
 import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.Random;
 

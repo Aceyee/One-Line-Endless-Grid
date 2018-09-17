@@ -16,9 +16,9 @@ import java.util.ArrayList;
 public class GameView extends GridLayout{
     Cell [][] cells;
     Cell startCell;
-    int cellColor = 0xffeee4da;
-    int defaultColor = 0xffbbadc0;
-    int selectedColor = 0xffccc4da;
+    int cellColor;
+    int defaultColor;
+    int selectedColor;
     private int numRows;
     private int numCols;
     private ArrayList<Cell> arrayList;
@@ -41,8 +41,8 @@ public class GameView extends GridLayout{
     }
 
     private void initGame(AttributeSet attrs) {
-        this.numRows=3;
-        this.numCols=4;
+        this.numRows=5;
+        this.numCols=5;
         if(attrs==null) {
 //            cellColor = 0xffeee4da;
 //            defaultColor = 0xffbbadc0;
@@ -54,15 +54,6 @@ public class GameView extends GridLayout{
             selectedColor = getResources().getColor(R.color.selectedColor);
         }
         setBackgroundGrid();
-        GridGenerator gg = new GridGenerator(getContext(), this.numRows, this.numCols);
-        this.cells = gg.grid;
-        this.startCell = gg.start;
-        setColumnCount(cells[0].length);
-        for(int i=0; i<cells.length; i++){
-            for(int j=0; j<cells[0].length; j++){
-                addView(cells[i][j], GetCellWidth(), GetCellWidth());
-            }
-        }
         startGame();
     }
 
@@ -208,17 +199,22 @@ public class GameView extends GridLayout{
         return false;
     }
 
-    private void startGame() {
+    public void startGame() {
+        removeAllViews();
+        GridGenerator gg = new GridGenerator(getContext(), this.numRows, this.numCols);
+        this.cells = gg.grid;
+        this.startCell = gg.start;
+        setColumnCount(cells[0].length);
+        for(int i=0; i<cells.length; i++){
+            for(int j=0; j<cells[0].length; j++){
+                addView(cells[i][j], GetCellWidth(), GetCellWidth());
+            }
+        }
         stack=new ArrayList<>();
         stack.add(cells[0][0]);
         cells[0][0].view.setBackgroundColor(selectedColor);
         cells[0][0].visited=true;
         addAdjacent(startCell.i, startCell.j);
-        /*
-        for(int i=0; i<arrayList.size();i++) {
-            Log.d(TAG, "startGame: " + arrayList.get(i).i+" "+arrayList.get(i).j);
-        }*/
-        //Log.d("", "startGame: "+cells[1][1].rect.left);
         getGesture();
     }
 
