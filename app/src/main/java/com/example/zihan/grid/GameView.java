@@ -57,12 +57,10 @@ public class GameView extends GridLayout{
         GridGenerator gg = new GridGenerator(getContext(), this.numRows, this.numCols);
         this.cells = gg.grid;
         this.startCell = gg.start;
-        ModelCell [][]mc = gg.modelCells;
         setColumnCount(cells[0].length);
         for(int i=0; i<cells.length; i++){
             for(int j=0; j<cells[0].length; j++){
-                //addView(cells[i][j], GetCellWidth(), GetCellWidth());
-                addView(mc[i][j], GetCellWidth(), GetCellWidth());
+                addView(cells[i][j], GetCellWidth(), GetCellWidth());
             }
         }
         startGame();
@@ -173,7 +171,7 @@ public class GameView extends GridLayout{
     private boolean checkComplete() {
         for (int i=0; i<numRows;i++){
             for (int j=0; j<numCols; j++){
-                if(!cells[i][j].visited){
+                if(!cells[i][j].block && !cells[i][j].visited ){
                     return false;
 //                    Log.d(TAG, "checkComplete: false");
                 }
@@ -202,7 +200,7 @@ public class GameView extends GridLayout{
     private boolean isValidCell(int i, int j){
         if(i>=0 && i<numRows){
             if(j>=0 && j<numCols){
-                if(!cells[i][j].visited) {
+                if(!cells[i][j].visited && !cells[i][j].block) {
                     return true;
                 }
             }

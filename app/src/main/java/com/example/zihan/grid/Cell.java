@@ -1,6 +1,7 @@
 package com.example.zihan.grid;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -13,6 +14,7 @@ public class Cell extends FrameLayout {
     public int i;
     public int j;
     public boolean visited;
+    public boolean block=false;
 
     public Cell(Context context) {
         super(context);
@@ -33,6 +35,10 @@ public class Cell extends FrameLayout {
         LayoutParams lp = new LayoutParams(-1, -1);
         lp.setMargins(10,10,0,0);
         addView(view, lp);
+    }
+
+    public void backgroundColor(){
+        view.setBackgroundColor(Color.BLACK);
     }
 
     public boolean equals(Cell obj) {

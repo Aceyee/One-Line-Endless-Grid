@@ -66,12 +66,4 @@ public class ModelCell extends FrameLayout {
         lp.setMargins(10,10,0,0);
         addView(view, lp);
     }
-
-    /*
-    public boolean equals(ModelCell obj) {
-        if(this.i==obj.i && this.j==obj.j){
-            return true;
-        }
-        return false;
-    }*/
 }
