@@ -41,8 +41,8 @@ public class GameView extends GridLayout{
     }
 
     private void initGame(AttributeSet attrs) {
-        this.numRows=5;
-        this.numCols=5;
+        this.numRows=6;
+        this.numCols=6;
         if(attrs==null) {
 //            cellColor = 0xffeee4da;
 //            defaultColor = 0xffbbadc0;
