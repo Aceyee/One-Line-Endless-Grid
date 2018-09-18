@@ -9,7 +9,6 @@ import java.util.Random;
 public class GridGenerator {
     private String TAG="";
     public Cell [][] grid;
-    public ArrayList<Node> arrayList;
     public int [][] map;
     public Cell start;
     public int width;
@@ -31,7 +30,6 @@ public class GridGenerator {
         this.width=width;
         grid=new Cell[height][width];
         map = new int[height][width];
-        arrayList =new ArrayList<>();
         setMap();
         generate2(context);
     }
@@ -63,13 +61,14 @@ public class GridGenerator {
     private void generate2(Context context) {
         start = new Cell(context, 0, 0);
         Random random = new Random();
+        ArrayList<Node> arrayList = new ArrayList<>();
         int curI = 0;
         int curJ = 0;
         while(true) {
             map[curI][curJ]=0;
             Log.d(TAG, "generate2: "+curI +" "+curJ);
             updateAdjacent(curI, curJ);
-            getAdjacent(curI, curJ);
+            arrayList = getAdjacent(arrayList, curI, curJ);
             if(arrayList.size()==0){
                 break;
             }else{
@@ -116,50 +115,34 @@ public class GridGenerator {
 
             }
         }*/
-        if(isValidCell(i-1,j)){
-            map[i-1][j]--;
-            if(map[i-1][j]==0){
-                map[i-1][j]--;
-            }
-        }
-        if(isValidCell(i,j-1)){
-            map[i][j-1]--;
-            if(map[i][j-1]==0){
-                map[i][j-1]--;
-            }
-        }
-        if(isValidCell(i,j+1)){
-            map[i][j+1]--;
-            if(map[i][j+1]==0){
-                map[i][j+1]--;
-            }
-        }
-        if(isValidCell(i+1,j)){
-            map[i+1][j]--;
-            if(map[i+1][j]==0){
-                map[i+1][j]--;
+        ArrayList<Node> al = new ArrayList<>();
+        al = getAdjacent(al, i, j);
+        for(int n =0; n <al.size(); n++){
+            Node node = al.get(n);
+            if(isValidCell(node.i, node.j)){
+                map[node.i][node.j]--;
+                if(map[node.i][node.j]==0){//avoid to be 0, since 0 means path
+                    map[node.i][node.j]--;
+                }
             }
         }
     }
 
-    private void getAdjacent(int i, int j){
+    private ArrayList<Node> getAdjacent(ArrayList<Node> arrayList, int i, int j){
         arrayList = new ArrayList<>();
         if(isValidCell(i-1,j)){
-//            map[i-1][j]--;
             arrayList.add(new Node(i-1, j));
         }
         if(isValidCell(i,j-1)){
-//            map[i][j-1]--;
             arrayList.add(new Node(i, j-1));
         }
         if(isValidCell(i,j+1)){
-//            map[i][j+1]--;
             arrayList.add(new Node(i, j+1));
         }
         if(isValidCell(i+1,j)){
-//            map[i+1][j]--;
             arrayList.add(new Node(i+1, j));
         }
+        return arrayList;
     }
     private boolean isValidCell(int i, int j){
         if(i>=0 && i<height){
