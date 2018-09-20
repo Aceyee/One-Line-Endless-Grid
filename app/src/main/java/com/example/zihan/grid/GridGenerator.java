@@ -31,7 +31,7 @@ public class GridGenerator {
         grid=new Cell[height][width];
         map = new int[height][width];
         setMap();
-        generate2(context);
+        generate(context);
     }
 
     private void setMap() {
@@ -58,17 +58,30 @@ public class GridGenerator {
         }
     }
 
-    private void generate2(Context context) {
-        start = new Cell(context, 0, 0);
+    private void generate(Context context) {
         Random random = new Random();
-        ArrayList<Node> arrayList = new ArrayList<>();
-        int curI = 0;
-        int curJ = 0;
+        //int randomI = random.nextInt(height);
+//        int randomJ = random.nextInt(width);
+        int randomI=0;
+        int randomJ=0;
+        start = new Cell(context, randomI, randomJ);
+        ArrayList<Node> arrayList;
+        int curI = randomI;
+        int curJ = randomJ;
         while(true) {
             map[curI][curJ]=0;
             Log.d(TAG, "generate2: "+curI +" "+curJ);
             updateAdjacent(curI, curJ);
-            arrayList = getAdjacent(arrayList, curI, curJ);
+            if((curI==1&&curJ==1)||
+                    (curI==height-2&&curJ==1)||
+                    (curI==1&&curJ==width-2)||
+                    (curI==height-2&&curJ==width-2)){
+                arrayList = getCornor(curI, curJ);
+            }else {
+                arrayList = getAdjacent(curI, curJ);
+            }
+//            arrayList = getAdjacent(curI, curJ);
+
             if(arrayList.size()==0){
                 break;
             }else{
@@ -96,27 +109,181 @@ public class GridGenerator {
                 }
             }
         }
-        start = new Cell(context, 0, 0);
+    }
+
+    private ArrayList<Node> getCornor(int curI, int curJ) {
+        ArrayList<Node> al;
+        if(curI==1&&curJ==1){
+            al = topLeft();
+        }else if(curI==height-2&&curJ==1){
+            al = botLeft();
+        }else if(curI==1&&curJ==width-2){
+            al = topRight();
+        }else { //(curI==height-2&&curJ==width-2)
+            al=botRight();
+        }
+        return al;
+    }
+
+    private ArrayList<Node> topLeft() {
+        ArrayList<Node> sideList = new ArrayList<>();
+        if(map[1][0]>0 &&map[0][1]>0) {
+            int countV=0;//vertical
+            int countH=0;//horizontal
+            for (int i = 2; i < height; i++) {
+                for (int j = 0; j < 2; j++) {
+                    if(map[i][j]==0){
+                        countV++;
+                    }
+                }
+            }
+            for (int i = 0; i < 2; i++) {
+                for (int j = 2; j < width; j++) {
+                    if(map[i][j]==0){
+                        countH++;
+                    }
+                }
+            }
+            if(countV>countH){
+                sideList.add(new Node(1,0));
+                if(map[2][0]>0){
+                    map[2][0]=-1;
+                }
+            }else if(countH>countV){
+                sideList.add(new Node(0,1));
+                if(map[0][2]>0){
+                    map[0][2]=-1;
+                }
+            }else{//countV==countH
+                sideList.add(new Node(1,0));
+                sideList.add(new Node(0,1));
+            }
+        }else{
+            sideList = getAdjacent(1, 1);
+        }
+        return sideList;
+    }
+
+    private ArrayList<Node> botLeft() {
+        ArrayList<Node> sideList = new ArrayList<>();
+        if (map[height-2][0] > 0 && map[height-1][1] > 0) {
+            int countV = 0;//vertical
+            int countH = 0;//horizontal
+            for (int i = 0; i < height-2; i++) {
+                for (int j = 0; j < 2; j++) {
+                    if (map[i][j] == 0) {
+                        countV++;
+                    }
+                }
+            }
+            for (int i = height-2; i < height; i++) {
+                for (int j = 2; j < width; j++) {
+                    if (map[i][j] == 0) {
+                        countH++;
+                    }
+                }
+            }
+            if (countV > countH) {
+                sideList.add(new Node(height-2, 0));
+                if(map[height-3][0]>0){
+                    map[height-3][0]=-1;
+                }
+            } else if (countH > countV) {
+                sideList.add(new Node(height-1, 1));
+                if(map[height-1][2]>0){
+                    map[height-1][2]=-1;
+                }
+            } else {//countV==countH
+                sideList.add(new Node(height-2, 0));
+                sideList.add(new Node(height-1, 1));
+            }
+        } else {
+            sideList = getAdjacent(height-2, 1);
+        }
+        return sideList;
+    }
+
+    private ArrayList<Node> topRight() {
+        ArrayList<Node> sideList = new ArrayList<>();
+        if(map[0][width-2]>0 &&map[1][width-1]>0) {
+            int countV=0;//vertical
+            int countH=0;//horizontal
+            for (int i = 2; i < height; i++) {
+                for (int j =width-2; j < width; j++) {
+                    if(map[i][j]==0){
+                        countV++;
+                    }
+                }
+            }
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < width-2; j++) {
+                    if(map[i][j]==0){
+                        countH++;
+                    }
+                }
+            }
+            if(countV>countH){
+                sideList.add(new Node(1,width-1));
+                if(map[2][width-1]>0){
+                    map[2][width-1]=-1;
+                }
+            }else if(countH>countV){
+                sideList.add(new Node(0,width-2));
+                if(map[0][width-3]>0){
+                    map[0][width-3]=-1;
+                }
+            }else{//countV==countH
+                sideList.add(new Node(1,width-1));
+                sideList.add(new Node(0,width-2));
+            }
+        }else{
+            sideList = getAdjacent(1, width-2);
+        }
+        return sideList;
+    }
+
+    private ArrayList<Node> botRight() {
+        ArrayList<Node> sideList = new ArrayList<>();
+        if(map[height-1][width-2]>0 &&map[height-2][width-1]>0) {
+            int countV=0;//vertical
+            int countH=0;//horizontal
+            for (int i = 0; i < height-2; i++) {
+                for (int j =width-2; j < width; j++) {
+                    if(map[i][j]==0){
+                        countV++;
+                    }
+                }
+            }
+            for (int i = height-2; i < height; i++) {
+                for (int j = 0; j < width-2; j++) {
+                    if(map[i][j]==0){
+                        countH++;
+                    }
+                }
+            }
+            if(countV>countH){
+                sideList.add(new Node(height-2,width-1));
+                if(map[height-3][width-1]>0){
+                    map[height-3][width-1]=-1;
+                }
+            }else if(countH>countV){
+                sideList.add(new Node(height-1,width-2));
+                if(map[height-1][width-3]>0){
+                    map[height-1][width-3]=-1;
+                }
+            }else{//countV==countH
+                sideList.add(new Node(height-2,width-1));
+                sideList.add(new Node(height-1,width-2));
+            }
+        }else{
+            sideList = getAdjacent(height-2, width-2);
+        }
+        return sideList;
     }
 
     private void updateAdjacent(int i, int j) {
-        /*
-        getAdjacent(i, j);
-        //copy of arraylist
-        ArrayList<Node> arrayList2 = new ArrayList<>();
-        for(int n=0; n<arrayList.size();n++){
-            arrayList2.add(arrayList.get(n));
-        }
-        //for each elemnt in arrayList2, find adjacent
-        for(int n=0; n<arrayList2.size();n++){
-            Node node = arrayList2.get(n);
-            getAdjacent(node.i, node.j);
-            for(int m=0; m<arrayList.size();m++){
-
-            }
-        }*/
-        ArrayList<Node> al = new ArrayList<>();
-        al = getAdjacent(al, i, j);
+        ArrayList<Node> al;
+        al = getAdjacent(i, j);
         for(int n =0; n <al.size(); n++){
             Node node = al.get(n);
             if(isValidCell(node.i, node.j)){
@@ -128,8 +295,8 @@ public class GridGenerator {
         }
     }
 
-    private ArrayList<Node> getAdjacent(ArrayList<Node> arrayList, int i, int j){
-        arrayList = new ArrayList<>();
+    private ArrayList<Node> getAdjacent(int i, int j){
+        ArrayList<Node> arrayList = new ArrayList<>();
         if(isValidCell(i-1,j)){
             arrayList.add(new Node(i-1, j));
         }
@@ -144,6 +311,7 @@ public class GridGenerator {
         }
         return arrayList;
     }
+
     private boolean isValidCell(int i, int j){
         if(i>=0 && i<height){
             if(j>=0 && j<width){
@@ -154,7 +322,8 @@ public class GridGenerator {
         }
         return false;
     }
-    private void generate(Context context) {
+
+    private void generateDefault(Context context) {
         for(int i=0; i<grid.length; i++){
             for(int j=0; j<grid[0].length; j++){
                 Cell c = new Cell(context, i, j);

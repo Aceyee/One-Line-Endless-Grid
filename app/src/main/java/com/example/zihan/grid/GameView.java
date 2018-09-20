@@ -211,9 +211,9 @@ public class GameView extends GridLayout{
             }
         }
         stack=new ArrayList<>();
-        stack.add(cells[0][0]);
-        cells[0][0].view.setBackgroundColor(selectedColor);
-        cells[0][0].visited=true;
+        stack.add(cells[startCell.i][startCell.j]);
+        cells[startCell.i][startCell.j].view.setBackgroundColor(selectedColor);
+        cells[startCell.i][startCell.j].visited=true;
         addAdjacent(startCell.i, startCell.j);
         getGesture();
     }
