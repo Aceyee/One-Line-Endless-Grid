@@ -80,7 +80,19 @@ public class GridGenerator {
             }else {
                 arrayList = getAdjacent(curI, curJ);
             }
-//            arrayList = getAdjacent(curI, curJ);
+
+            if(arrayList.size()==2){
+                int i1= arrayList.get(0).i;
+                int j1= arrayList.get(0).j;
+                int i2= arrayList.get(1).i;
+                int j2= arrayList.get(1).j;
+
+                if(i1==i2){// && (j1+j2)/2=curJ
+                    arrayList = leftRight(j1, j2, curI);
+                }else if(j1==j2){ //&&(i1+i2)/2==curI
+                    arrayList = TopBot(i1, i2, curJ);
+                }
+            }
 
             if(arrayList.size()==0){
                 break;
@@ -110,6 +122,57 @@ public class GridGenerator {
             }
         }
     }
+
+    private ArrayList<Node> TopBot(int i1, int i2, int curJ) {
+        ArrayList<Node> al= new ArrayList<>();
+        int count1 =0;
+        int count2 =0;
+        for(int j=0; j<width; j++){
+            if(map[i1][j]>0){
+                count1++;
+            }
+        }
+        for(int j=0; j<width; j++){
+            if(map[i2][j]>0){
+                count2++;
+            }
+        }
+        if(count1>count2){//top has more space
+            al.add(new Node(i1, curJ));
+        }else if(count2>count1){
+            al.add(new Node(i2, curJ));
+        }else{
+            al.add(new Node(i1, curJ));
+            al.add(new Node(i2, curJ));
+        }
+        return al;
+    }
+
+    private ArrayList<Node> leftRight(int j1, int j2, int curI) {
+        ArrayList<Node> al= new ArrayList<>();
+        int count1 = 0;
+        int count2 = 0;
+        for(int i=0; i<height; i++){
+            if(map[i][j1]>0){
+                count1++;
+            }
+        }
+        for(int i=0; i<height; i++){
+            if(map[i][j2]>0){
+                count2++;
+            }
+        }
+        if(count1>count2){//left line has more space
+            al.add(new Node(curI, j1));
+        }else if(count1<count2){//left line has more space
+            al.add(new Node(curI, j2));
+        }else{
+            al.add(new Node(curI, j1));
+            al.add(new Node(curI, j2));
+        }
+        return al;
+    }
+
 
     private ArrayList<Node> getCornor(int curI, int curJ) {
         ArrayList<Node> al;
@@ -297,15 +360,19 @@ public class GridGenerator {
 
     private ArrayList<Node> getAdjacent(int i, int j){
         ArrayList<Node> arrayList = new ArrayList<>();
+        //TOP
         if(isValidCell(i-1,j)){
             arrayList.add(new Node(i-1, j));
         }
+        //LEFT
         if(isValidCell(i,j-1)){
             arrayList.add(new Node(i, j-1));
         }
+        //RIGHT
         if(isValidCell(i,j+1)){
             arrayList.add(new Node(i, j+1));
         }
+        //BOTTOM
         if(isValidCell(i+1,j)){
             arrayList.add(new Node(i+1, j));
         }
