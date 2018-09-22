@@ -28,10 +28,27 @@ public class GridGenerator {
     public GridGenerator(Context context, int height, int width){
         this.height=height;
         this.width=width;
-        grid=new Cell[height][width];
-        map = new int[height][width];
-        setMap();
-        generate(context);
+        while(true){
+            grid=new Cell[height][width];
+            map = new int[height][width];
+            setMap();
+            generate(context);
+            if(checkNum()){
+                for(int i=0; i<height; i++){
+                    for(int j=0; j<width; j++){
+                        Cell c = new Cell(context, i, j);
+                        if(map[i][j]==0) {
+                            grid[i][j] = c;
+                        }else{
+                            c.block=true;
+                            c.backgroundColor();
+                            grid[i][j] = c;
+                        }
+                    }
+                }
+                break;
+            }
+        }
     }
 
     private void setMap() {
@@ -50,20 +67,14 @@ public class GridGenerator {
         map[0][width-1]=2;
         map[height-1][0]=2;
         map[height-1][width-1]=2;
-        for(int i=0; i<height; i++){
-            for(int j=0; j<width;j++){
-//                System.out.print(map[i][j]+" ");
-            }
-//            System.out.println();
-        }
     }
 
     private void generate(Context context) {
         Random random = new Random();
-        //int randomI = random.nextInt(height);
-//        int randomJ = random.nextInt(width);
-        int randomI=0;
-        int randomJ=0;
+        int randomI = random.nextInt(height);
+        int randomJ = random.nextInt(width);
+//        int randomI=0;
+//        int randomJ=0;
         start = new Cell(context, randomI, randomJ);
         ArrayList<Node> arrayList;
         int curI = randomI;
@@ -109,18 +120,23 @@ public class GridGenerator {
                 }*/
             }
         }
+
+    }
+
+    private boolean checkNum() {
+        int count = 0;
+        double numGrid = (double) width * height;
         for(int i=0; i<height; i++){
             for(int j=0; j<width; j++){
-                Cell c = new Cell(context, i, j);
                 if(map[i][j]==0) {
-                    grid[i][j] = c;
-                }else{
-                    c.block=true;
-                    c.backgroundColor();
-                    grid[i][j] = c;
+                    count++;
+                }
+                if(count >= numGrid*2/3){
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     private ArrayList<Node> TopBot(int i1, int i2, int curJ) {
@@ -164,7 +180,7 @@ public class GridGenerator {
         }
         if(count1>count2){//left line has more space
             al.add(new Node(curI, j1));
-        }else if(count1<count2){//left line has more space
+        }else if(count1<count2){//right line has more space
             al.add(new Node(curI, j2));
         }else{
             al.add(new Node(curI, j1));
