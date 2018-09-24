@@ -16,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </application>
 
 </manifest>

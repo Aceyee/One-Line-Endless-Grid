@@ -19,8 +19,8 @@ public class GameView extends GridLayout{
     int cellColor;
     int defaultColor;
     int selectedColor;
-    private int numRows;
-    private int numCols;
+    public int numRows;
+    public int numCols;
     private ArrayList<Cell> arrayList;
     private ArrayList<Cell> stack;
     String TAG="";
@@ -41,8 +41,8 @@ public class GameView extends GridLayout{
     }
 
     private void initGame(AttributeSet attrs) {
-        this.numRows=8;
-        this.numCols=8;
+        this.numRows=MainActivity.getHeight();
+        this.numCols=MainActivity.getWidth();
         if(attrs==null) {
 //            cellColor = 0xffeee4da;
 //            defaultColor = 0xffbbadc0;

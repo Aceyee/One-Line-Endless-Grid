@@ -131,7 +131,7 @@ public class GridGenerator {
                 if(map[i][j]==0) {
                     count++;
                 }
-                if(count >= numGrid*2/3){
+                if(count >= numGrid*3/4){
                     return true;
                 }
             }
