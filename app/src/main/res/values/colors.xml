@@ -3,6 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    
-    <color name="squareColor">#3F51B5</color>
+
+    <color name="cellColor">#ffeee4da</color>
+    <color name="defaultColor">#ffbbadc0</color>
+    <color name="selectedColor">#ffccc4da</color>
 </resources>
