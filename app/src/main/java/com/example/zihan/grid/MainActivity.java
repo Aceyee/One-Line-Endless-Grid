@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void chapterMode(View view) {
         Log.d("","chapter");
-
     }
 
     public void endlessMode(View view) {
@@ -34,29 +33,6 @@ public class MainActivity extends AppCompatActivity {
         seekBarHeight=(SeekBar)findViewById(R.id.mapHeight);
         seekBarWidth.setMax(7);
         seekBarHeight.setMax(7);
-
-        /*
-        seekBarWidth.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int value;
-            int max;
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                value = i+5;
-                max = seekBarWidth.getMax()+5;
-                Log.d(TAG, "onProgressChanged: "+value+"/"+max);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        */
     }
 
     public void aboutMe(View view) {
@@ -87,5 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static int getWidth(){
         return width;
+    }
+
+    public void colorfy(View view) {
     }
 }
