@@ -1,6 +1,8 @@
 package com.example.zihan.grid;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -14,6 +16,8 @@ import java.util.ArrayList;
 public class GameView extends GridLayout{
     Cell [][] cells;
     Cell startCell;
+    AlertDialog.Builder dialog;
+    Context context;
     int cellColor;
     int defaultColor;
     int selectedColor;
@@ -25,20 +29,21 @@ public class GameView extends GridLayout{
 
     public GameView(Context context) {
         super(context);
-        initGame(null);
+        initGame(context,null);
     }
 
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initGame(attrs);
+        initGame(context, attrs);
     }
 
     public GameView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initGame(attrs);
+        initGame(context, attrs);
     }
 
-    private void initGame(AttributeSet attrs) {
+    private void initGame(Context context, AttributeSet attrs) {
+        this.context =context;
         this.numRows=MainActivity.getWidth();
         this.numCols=MainActivity.getWidth();
         if(attrs==null) {
@@ -73,7 +78,7 @@ public class GameView extends GridLayout{
                             cells[iindex][jindex].visited = true;
                             stack.add(cells[iindex][jindex]);
                             if(checkComplete()){
-                                Log.d(TAG, "onTouch: 过关！");
+                                complete();
                             }
                             addAdjacent(iindex,jindex);
                         }else if(stack.contains(cells[iindex][jindex])){
@@ -103,7 +108,7 @@ public class GameView extends GridLayout{
                             cells[iindex][jindex].visited = true;
                             stack.add(cells[iindex][jindex]);
                             if(checkComplete()){
-                                Log.d(TAG, "onTouch: 过关！");
+                                complete();
                             }
                             addAdjacent(iindex,jindex);
                         }else if(stack.contains(cells[iindex][jindex])){
@@ -129,6 +134,27 @@ public class GameView extends GridLayout{
                 return true;
             }
         });
+    }
+
+    private void complete() {
+        Log.d(TAG, "onTouch: 过关！");
+        dialog = new AlertDialog.Builder(context);
+        dialog.setTitle("标题");
+        dialog.setMessage("具体信息");
+        dialog.setCancelable(false);
+        dialog.setPositiveButton("继续", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startGame();
+            }
+        });
+        dialog.setNegativeButton("退出", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        dialog.show();
     }
 
     private int getIndexI(float n){
