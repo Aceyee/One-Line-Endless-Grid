@@ -2,22 +2,25 @@ package com.example.zihan.grid;
 import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     String TAG = "MainActivity";
     GameView gameView;
+    View view;
+    GridLayout gridLayout;
     private TextView tvMapWidth;
-    private TextView tvMapHeight;
-    private static int height;
     private static int width;
     private Button btnWidthMinus;
     private Button btnWidthPlus;
-    private Button btnHeightMinus;
-    private Button btnHeightPlus;
+    private int marginLeft;
+    private int marginRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +36,16 @@ public class MainActivity extends AppCompatActivity {
         Log.d("","endless");
 
         setContentView(R.layout.activity_setting);
+        this.view = view;
         tvMapWidth=(TextView) findViewById(R.id.mapWidth);
-        tvMapHeight=(TextView) findViewById(R.id.mapHeight);
-        height = Integer.parseInt(tvMapHeight.getText().toString());
         width = Integer.parseInt(tvMapWidth.getText().toString());
-        btnHeightMinus = findViewById(R.id.btnHeightMinus);
-        btnHeightPlus=findViewById(R.id.btnHeightPlus);
         btnWidthMinus=findViewById(R.id.btnWidthMinus);
         btnWidthPlus=findViewById(R.id.btnWidthPlus);
+        gridLayout = findViewById(R.id.mapPreview);
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)gridLayout.getLayoutParams();
+        marginLeft = lp.leftMargin;
+        marginRight = lp.rightMargin;
+        setTvMapWidth();
     }
 
     public void aboutMe(View view) {
@@ -59,15 +64,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         gameView = findViewById(R.id.gameView);
     }
-    public static int getHeight(){
-        return height;
-    }
+
 
     public static int getWidth(){
         return width;
-    }
-
-    public void colorfy(View view) {
     }
 
     private void setTvMapWidth(){
@@ -79,19 +79,17 @@ public class MainActivity extends AppCompatActivity {
             btnWidthMinus.setEnabled(true);
             btnWidthPlus.setEnabled(true);
         }
+        gridLayout.removeAllViews();
+        gridLayout.setColumnCount(width);
+        for(int i=0; i<width; i++){
+            for (int j=0; j<width; j++){
+                Cell cell = new Cell(view.getContext(),i,j);
+                gridLayout.addView(cell,GetCellWidth(),GetCellWidth());
+            }
+        }
         tvMapWidth.setText(width+"");
     }
-    private void setTvMapHeight(){
-        if(height==5){
-            btnHeightMinus.setEnabled(false);
-        }else if(height==12){
-            btnHeightPlus.setEnabled(false);
-        }else{
-            btnHeightMinus.setEnabled(true);
-            btnHeightPlus.setEnabled(true);
-        }
-        tvMapHeight.setText(height+"");
-    }
+
     public void widthMinus(View view) {
         width--;
         setTvMapWidth();
@@ -102,13 +100,11 @@ public class MainActivity extends AppCompatActivity {
         setTvMapWidth();
     }
 
-    public void heightMinus(View view) {
-        height--;
-        setTvMapHeight();
-    }
-
-    public void heightPlus(View view) {
-        height++;
-        setTvMapHeight();
+    private int GetCellWidth() {
+        DisplayMetrics displayMetrics;
+        displayMetrics = getResources().getDisplayMetrics();
+        int cellWidth;
+        cellWidth = displayMetrics.widthPixels- marginLeft-marginRight;
+        return ( cellWidth - 10 )/width;
     }
 }

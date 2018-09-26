@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:text="关卡模式"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
         android:onClick="chapterMode"
         />
     <Button
@@ -35,13 +34,5 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:onClick="aboutMe"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="着色器"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:onClick="colorfy"
         />
 </LinearLayout>

@@ -1,12 +1,10 @@
 package com.example.zihan.grid;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridLayout;
@@ -41,7 +39,7 @@ public class GameView extends GridLayout{
     }
 
     private void initGame(AttributeSet attrs) {
-        this.numRows=MainActivity.getHeight();
+        this.numRows=MainActivity.getWidth();
         this.numCols=MainActivity.getWidth();
         if(attrs==null) {
 //            cellColor = 0xffeee4da;
