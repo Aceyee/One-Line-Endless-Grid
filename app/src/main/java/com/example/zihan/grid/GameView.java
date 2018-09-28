@@ -21,6 +21,7 @@ public class GameView extends GridLayout{
     int cellColor;
     int defaultColor;
     int selectedColor;
+    int transparent;
     public int numRows;
     public int numCols;
     private ArrayList<Cell> arrayList;
@@ -55,6 +56,7 @@ public class GameView extends GridLayout{
             cellColor = getResources().getColor(R.color.cellColor);
             defaultColor = getResources().getColor(R.color.defaultColor);
             selectedColor = getResources().getColor(R.color.selectedColor);
+            transparent = getResources().getColor(R.color.transparent);
         }
         setBackgroundGrid();
         startGame();
@@ -243,7 +245,7 @@ public class GameView extends GridLayout{
     }
 
     private void setBackgroundGrid() {
-        setBackgroundColor(defaultColor);
+        setBackgroundColor(transparent);
     }
 
     private int GetCellWidth() {

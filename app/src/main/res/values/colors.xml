@@ -7,4 +7,5 @@
     <color name="cellColor">#ffeee4da</color>
     <color name="defaultColor">#ffbbadc0</color>
     <color name="selectedColor">#ffccc4da</color>
+    <color name="transparent">#00000000</color>
 </resources>

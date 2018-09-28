@@ -2,14 +2,12 @@ package com.example.zihan.grid;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
 public class Cell extends FrameLayout {
-    String TAG="";
+    String TAG="Cell";
     public View view;
     public int i;
     public int j;
@@ -38,7 +36,7 @@ public class Cell extends FrameLayout {
     }
 
     public void backgroundColor(){
-        view.setBackgroundColor(Color.BLACK);
+        view.setBackgroundColor(0x00000000);
     }
 
     public boolean equals(Cell obj) {

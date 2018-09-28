@@ -1,13 +1,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient1"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     >
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_gravity="center"
         >
         <com.example.zihan.grid.GameView
             android:id="@+id/gameView"
@@ -16,10 +17,12 @@
             >
         </com.example.zihan.grid.GameView>
     </RelativeLayout>
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:textSize="20dp"
-        android:text="下一关"
-        android:onClick="Next"/>
+
+    <ImageButton
+        android:id="@+id/btnPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@android:color/transparent"
+    android:src="@mipmap/ic_menu"/>
 </LinearLayout>
