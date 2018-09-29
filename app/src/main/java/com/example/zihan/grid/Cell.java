@@ -18,6 +18,18 @@ public class Cell extends FrameLayout {
         init();
     }
 
+    public Cell(Context context, Cell c) {
+        super(context);
+        init();
+        this.i = c.i;
+        this.j = c.j;
+        this.visited = c.visited;
+        this.block = c.block;
+        if(block){
+            backgroundColor();
+        }
+    }
+
     public Cell(Context context, int i, int j) {
         super(context);
         this.i = i;

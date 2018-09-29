@@ -13,6 +13,7 @@ public class GridGenerator {
     public Cell start;
     public int width;
     public int height;
+    public ArrayList<Node> track;
 
     public GridGenerator(Context context){
         grid=new Cell[3][4];
@@ -28,6 +29,7 @@ public class GridGenerator {
     public GridGenerator(Context context, int height, int width){
         this.height=height;
         this.width=width;
+        track = new ArrayList<>();
         while(true){
             grid=new Cell[height][width];
             map = new int[height][width];
@@ -81,7 +83,8 @@ public class GridGenerator {
         int curJ = randomJ;
         while(true) {
             map[curI][curJ]=0;
-            Log.d(TAG, "generate2: "+curI +" "+curJ);
+            Log.d(TAG, "generate: "+curI +" "+curJ);
+            track.add(new Node(curI, curJ));
             updateAdjacent(curI, curJ);
             if((curI==1&&curJ==1)||
                     (curI==height-2&&curJ==1)||

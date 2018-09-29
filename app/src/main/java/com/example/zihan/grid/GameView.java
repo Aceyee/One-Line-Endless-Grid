@@ -21,11 +21,13 @@ public class GameView extends GridLayout{
     int cellColor;
     int defaultColor;
     int selectedColor;
+    int halfSelectColor;
     int transparent;
     public int numRows;
     public int numCols;
     private ArrayList<Cell> arrayList;
     private ArrayList<Cell> stack;
+    private ArrayList<Node> track;
     GridGenerator gg;
     String TAG="";
 
@@ -48,6 +50,7 @@ public class GameView extends GridLayout{
         this.context =context;
         this.numRows=MainActivity.getWidth();
         this.numCols=MainActivity.getWidth();
+        this.cells = new Cell[numRows][numCols];
         if(attrs==null) {
 //            cellColor = 0xffeee4da;
 //            defaultColor = 0xffbbadc0;
@@ -57,6 +60,7 @@ public class GameView extends GridLayout{
             cellColor = getResources().getColor(R.color.cellColor);
             defaultColor = getResources().getColor(R.color.defaultColor);
             selectedColor = getResources().getColor(R.color.selectedColor);
+            halfSelectColor = getResources().getColor(R.color.halfSelectedColor);
             transparent = getResources().getColor(R.color.transparent);
         }
         setBackgroundGrid();
@@ -229,9 +233,14 @@ public class GameView extends GridLayout{
     public void startGame() {
         removeAllViews();
         gg = new GridGenerator(getContext(), this.numRows, this.numCols);
-        this.cells = gg.grid;
+        this.track = gg.track;
+        for(int i=0; i<numRows; i++){
+            for(int j=0; j<numCols; j++){
+                this.cells[i][j] = new Cell(context, gg.grid[i][j]);
+            }
+        }
         this.startCell = gg.start;
-        setColumnCount(cells[0].length);
+        setColumnCount(numCols);
         for(int i=0; i<cells.length; i++){
             for(int j=0; j<cells[0].length; j++){
                 addView(cells[i][j], GetCellWidth(), GetCellWidth());
@@ -257,7 +266,37 @@ public class GameView extends GridLayout{
         return ( cellWidth - 10 ) / cells[0].length;
     }
 
-    public void returnMain(){
+    public void restart(){
+        removeAllViews();
+        for(int i=0; i<numRows; i++){
+            for(int j=0; j<numCols; j++){
+                this.cells[i][j] = new Cell(context, gg.grid[i][j]);
+            }
+        }
+        for(int i=0; i<cells.length; i++){
+            for(int j=0; j<cells[0].length; j++){
+                addView(cells[i][j], GetCellWidth(), GetCellWidth());
+            }
+        }
+        stack=new ArrayList<>();
+        stack.add(cells[startCell.i][startCell.j]);
+        cells[startCell.i][startCell.j].view.setBackgroundColor(selectedColor);
+        cells[startCell.i][startCell.j].visited=true;
+        addAdjacent(startCell.i, startCell.j);
+    }
 
+    public void hint() {
+        if(track.size()==0){
+            return;
+        }
+        int count =0;
+        while(count<3){
+            if(track.size()>0) {
+                Node n = track.get(0);
+                cells[n.i][n.j].setBackgroundColor(Color.RED);
+                track.remove(0);
+                count++;
+            }
+        }
     }
 }

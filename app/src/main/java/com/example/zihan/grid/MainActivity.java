@@ -156,9 +156,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void hint(View view) {
+        gameView.hint();
     }
 
     public void restart(View view) {
+        gameView.restart();
     }
 
     public void returnMain(View view) {
@@ -166,13 +168,13 @@ public class MainActivity extends AppCompatActivity {
         dialog.setTitle("标题");
         dialog.setMessage("返回主菜单吗");
         dialog.setCancelable(false);
-        dialog.setPositiveButton("继续", new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 setContentView(R.layout.activity_main);
             }
         });
-        dialog.setNegativeButton("退出", new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -180,5 +182,4 @@ public class MainActivity extends AppCompatActivity {
         });
         dialog.show();
     }
-
 }
