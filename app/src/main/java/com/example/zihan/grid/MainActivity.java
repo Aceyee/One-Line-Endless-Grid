@@ -1,5 +1,7 @@
 package com.example.zihan.grid;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Debug;
@@ -101,13 +103,14 @@ public class MainActivity extends AppCompatActivity {
     public void start(View view) {
         setContentView(R.layout.activity_game);
         gameView = findViewById(R.id.gameView);
+        /*
         btnPause = (ImageButton) findViewById(R.id.btnPause);
         btnPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showpopupWindow(v);// 显示PopupWindow
+                //showpopupWindow(v);// 显示PopupWindow
             }
-        });
+        });*/
     }
 
     public static int getWidth() {
@@ -152,6 +155,30 @@ public class MainActivity extends AppCompatActivity {
         return (cellWidth - 10) / width;
     }
 
-    public void mute(View view) {
+    public void hint(View view) {
     }
+
+    public void restart(View view) {
+    }
+
+    public void returnMain(View view) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(view.getContext());
+        dialog.setTitle("标题");
+        dialog.setMessage("返回主菜单吗");
+        dialog.setCancelable(false);
+        dialog.setPositiveButton("继续", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                setContentView(R.layout.activity_main);
+            }
+        });
+        dialog.setNegativeButton("退出", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        dialog.show();
+    }
+
 }

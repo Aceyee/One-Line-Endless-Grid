@@ -26,6 +26,7 @@ public class GameView extends GridLayout{
     public int numCols;
     private ArrayList<Cell> arrayList;
     private ArrayList<Cell> stack;
+    GridGenerator gg;
     String TAG="";
 
     public GameView(Context context) {
@@ -227,7 +228,7 @@ public class GameView extends GridLayout{
 
     public void startGame() {
         removeAllViews();
-        GridGenerator gg = new GridGenerator(getContext(), this.numRows, this.numCols);
+        gg = new GridGenerator(getContext(), this.numRows, this.numCols);
         this.cells = gg.grid;
         this.startCell = gg.start;
         setColumnCount(cells[0].length);
@@ -254,5 +255,9 @@ public class GameView extends GridLayout{
         int cellWidth;
         cellWidth = displayMetrics.widthPixels;
         return ( cellWidth - 10 ) / cells[0].length;
+    }
+
+    public void returnMain(){
+
     }
 }

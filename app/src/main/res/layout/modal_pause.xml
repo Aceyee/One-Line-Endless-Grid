@@ -4,22 +4,6 @@
     android:layout_height="wrap_content"
     android:background="@drawable/gradient1">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:onClick="mute"
-        android:text="静音"
-        android:textSize="20sp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:onClick="Next"
-        android:text="下一关"
-        android:textSize="20sp" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

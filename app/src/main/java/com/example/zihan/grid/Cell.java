@@ -1,7 +1,6 @@
 package com.example.zihan.grid;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
