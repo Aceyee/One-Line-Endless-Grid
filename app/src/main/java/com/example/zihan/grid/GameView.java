@@ -13,8 +13,8 @@ import android.widget.GridLayout;
 
 import java.util.ArrayList;
 
-public class GameView extends GridLayout{
-    Cell [][] cells;
+public class GameView extends GridLayout {
+    Cell[][] cells;
     Cell startCell;
     AlertDialog.Builder dialog;
     Context context;
@@ -29,11 +29,11 @@ public class GameView extends GridLayout{
     private ArrayList<Cell> stack;
     private ArrayList<Node> track;
     GridGenerator gg;
-    String TAG="";
+    String TAG = "";
 
     public GameView(Context context) {
         super(context);
-        initGame(context,null);
+        initGame(context, null);
     }
 
     public GameView(Context context, AttributeSet attrs) {
@@ -47,14 +47,14 @@ public class GameView extends GridLayout{
     }
 
     private void initGame(Context context, AttributeSet attrs) {
-        this.context =context;
-        this.numRows=MainActivity.getWidth();
-        this.numCols=MainActivity.getWidth();
-        if(attrs==null) {
+        this.context = context;
+        this.numRows = MainActivity.getWidth();
+        this.numCols = MainActivity.getWidth();
+        if (attrs == null) {
 //            cellColor = 0xffeee4da;
 //            defaultColor = 0xffbbadc0;
 //            selectedColor = 0xffccc4da;
-        }else{
+        } else {
             //Log.d(TAG, "initGame: "+attrs.getAttributeResourceValue());
             cellColor = getResources().getColor(R.color.cellColor);
             defaultColor = getResources().getColor(R.color.defaultColor);
@@ -66,38 +66,39 @@ public class GameView extends GridLayout{
         startGame();
     }
 
-    private void getGesture(){
+    private void getGesture() {
         setOnTouchListener(new OnTouchListener() {
             private float startX, startY, offsetX, offsetY;
             int jindex;
             int iindex;
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()){
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         startX = event.getX();
                         startY = event.getY();
-                        jindex= getIndexJ(startX);
-                        iindex= getIndexI(startY);
-                        if(arrayList.contains(cells[iindex][jindex])) {
+                        jindex = getIndexJ(startX);
+                        iindex = getIndexI(startY);
+                        if (arrayList.contains(cells[iindex][jindex])) {
                             cells[iindex][jindex].view.setBackgroundColor(selectedColor);
                             cells[iindex][jindex].visited = true;
                             stack.add(cells[iindex][jindex]);
-                            if(checkComplete()){
+                            if (checkComplete()) {
                                 complete();
                             }
-                            addAdjacent(iindex,jindex);
-                        }else if(stack.contains(cells[iindex][jindex])){
-                            for(int i=stack.size()-1; i>=0;i--){
-                                if(stack.get(i).equals(cells[iindex][jindex])){
+                            addAdjacent(iindex, jindex);
+                        } else if (stack.contains(cells[iindex][jindex])) {
+                            for (int i = stack.size() - 1; i >= 0; i--) {
+                                if (stack.get(i).equals(cells[iindex][jindex])) {
                                     break;
-                                }else{
-                                    cells[stack.get(i).i][stack.get(i).j].visited=false;
+                                } else {
+                                    cells[stack.get(i).i][stack.get(i).j].visited = false;
                                     cells[stack.get(i).i][stack.get(i).j].view.setBackgroundColor(cellColor);
                                     stack.remove(i);
                                 }
                             }
-                            addAdjacent(iindex,jindex);
+                            addAdjacent(iindex, jindex);
                         }
 //                        Log.d(TAG, "onClick: "+startX+" "+startY);
 //                        Log.d(TAG, "onClick: "+iindex+" "+jindex);
@@ -107,27 +108,27 @@ public class GameView extends GridLayout{
                     case MotionEvent.ACTION_MOVE:
                         offsetX = event.getX();
                         offsetY = event.getY();
-                        jindex= getIndexJ(offsetX);
-                        iindex= getIndexI(offsetY);
-                        if(arrayList.contains(cells[iindex][jindex])) {
+                        jindex = getIndexJ(offsetX);
+                        iindex = getIndexI(offsetY);
+                        if (arrayList.contains(cells[iindex][jindex])) {
                             cells[iindex][jindex].view.setBackgroundColor(selectedColor);
                             cells[iindex][jindex].visited = true;
                             stack.add(cells[iindex][jindex]);
-                            if(checkComplete()){
+                            if (checkComplete()) {
                                 complete();
                             }
-                            addAdjacent(iindex,jindex);
-                        }else if(stack.contains(cells[iindex][jindex])){
-                            for(int i=stack.size()-1; i>=0;i--){
-                                if(stack.get(i).equals(cells[iindex][jindex])){
+                            addAdjacent(iindex, jindex);
+                        } else if (stack.contains(cells[iindex][jindex])) {
+                            for (int i = stack.size() - 1; i >= 0; i--) {
+                                if (stack.get(i).equals(cells[iindex][jindex])) {
                                     break;
-                                }else{
-                                    cells[stack.get(i).i][stack.get(i).j].visited=false;
+                                } else {
+                                    cells[stack.get(i).i][stack.get(i).j].visited = false;
                                     cells[stack.get(i).i][stack.get(i).j].view.setBackgroundColor(cellColor);
                                     stack.remove(i);
                                 }
                             }
-                            addAdjacent(iindex,jindex);
+                            addAdjacent(iindex, jindex);
                         }
                         //cells[iindex][jindex].view.setBackgroundColor(selectedColor);
                         //cells[iindex][jindex].visited = true;
@@ -163,26 +164,26 @@ public class GameView extends GridLayout{
         dialog.show();
     }
 
-    private int getIndexI(float n){
+    private int getIndexI(float n) {
         int cellWidth = GetCellWidth();
-        int index=0;
-        for(int i=0; i<numRows; i++){
-            if(n>i*cellWidth){
+        int index = 0;
+        for (int i = 0; i < numRows; i++) {
+            if (n > i * cellWidth) {
                 index = i;
-            }else{
+            } else {
                 break;
             }
         }
         return index;
     }
 
-    private int getIndexJ(float n){
+    private int getIndexJ(float n) {
         int cellWidth = GetCellWidth();
-        int index=0;
-        for(int i=0; i<numCols; i++){
-            if(n>i*cellWidth){
+        int index = 0;
+        for (int i = 0; i < numCols; i++) {
+            if (n > i * cellWidth) {
                 index = i;
-            }else{
+            } else {
                 break;
             }
         }
@@ -190,9 +191,9 @@ public class GameView extends GridLayout{
     }
 
     private boolean checkComplete() {
-        for (int i=0; i<numRows;i++){
-            for (int j=0; j<numCols; j++){
-                if(!cells[i][j].block && !cells[i][j].visited ){
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numCols; j++) {
+                if (!cells[i][j].block && !cells[i][j].visited) {
                     return false;
 //                    Log.d(TAG, "checkComplete: false");
                 }
@@ -202,26 +203,26 @@ public class GameView extends GridLayout{
 //        Log.d(TAG, "checkComplete: true");
     }
 
-    private void addAdjacent(int i, int j){
+    private void addAdjacent(int i, int j) {
         arrayList = new ArrayList<>();
-        if(isValidCell(i-1,j)){
-            arrayList.add(cells[i-1][j]);
+        if (isValidCell(i - 1, j)) {
+            arrayList.add(cells[i - 1][j]);
         }
-        if(isValidCell(i,j-1)){
-            arrayList.add(cells[i][j-1]);
+        if (isValidCell(i, j - 1)) {
+            arrayList.add(cells[i][j - 1]);
         }
-        if(isValidCell(i,j+1)){
-            arrayList.add(cells[i][j+1]);
+        if (isValidCell(i, j + 1)) {
+            arrayList.add(cells[i][j + 1]);
         }
-        if(isValidCell(i+1,j)){
-            arrayList.add(cells[i+1][j]);
+        if (isValidCell(i + 1, j)) {
+            arrayList.add(cells[i + 1][j]);
         }
     }
 
-    private boolean isValidCell(int i, int j){
-        if(i>=0 && i<numRows){
-            if(j>=0 && j<numCols){
-                if(!cells[i][j].visited && !cells[i][j].block) {
+    private boolean isValidCell(int i, int j) {
+        if (i >= 0 && i < numRows) {
+            if (j >= 0 && j < numCols) {
+                if (!cells[i][j].visited && !cells[i][j].block) {
                     return true;
                 }
             }
@@ -231,35 +232,30 @@ public class GameView extends GridLayout{
 
     public void startGame() {
         removeAllViews();
-        if(numCols==0 && numCols==0){
-            gg = new GridGenerator(getContext());
-            this.numCols=3;
-            this.numRows=3;
-        }else {
-            gg = new GridGenerator(getContext(), this.numRows, this.numCols);
-        }
+
+        gg = new GridGenerator(getContext(), this.numRows, this.numCols);
         this.track = new ArrayList<>();
         this.cells = new Cell[numRows][numCols];
-        for(int i=0; i<gg.track.size(); i++){
+        for (int i = 0; i < gg.track.size(); i++) {
             Node n = gg.track.get(i);
             this.track.add(new Node(n.i, n.j));
         }
-        for(int i=0; i<numRows; i++){
-            for(int j=0; j<numCols; j++){
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numCols; j++) {
                 this.cells[i][j] = new Cell(context, gg.grid[i][j]);
             }
         }
         this.startCell = gg.start;
         setColumnCount(numCols);
-        for(int i=0; i<cells.length; i++){
-            for(int j=0; j<cells[0].length; j++){
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[0].length; j++) {
                 addView(cells[i][j], GetCellWidth(), GetCellWidth());
             }
         }
-        stack=new ArrayList<>();
+        stack = new ArrayList<>();
         stack.add(cells[startCell.i][startCell.j]);
         cells[startCell.i][startCell.j].view.setBackgroundColor(selectedColor);
-        cells[startCell.i][startCell.j].visited=true;
+        cells[startCell.i][startCell.j].visited = true;
         addAdjacent(startCell.i, startCell.j);
         getGesture();
     }
@@ -273,41 +269,41 @@ public class GameView extends GridLayout{
         displayMetrics = getResources().getDisplayMetrics();
         int cellWidth;
         cellWidth = displayMetrics.widthPixels;
-        return ( cellWidth - 10 ) / cells[0].length;
+        return (cellWidth - 10) / cells[0].length;
     }
 
-    public void restart(){
+    public void restart() {
         removeAllViews();
         track = new ArrayList<>();
-        for(int i=0; i<gg.track.size(); i++){
+        for (int i = 0; i < gg.track.size(); i++) {
             Node n = gg.track.get(i);
             this.track.add(new Node(n.i, n.j));
         }
-        for(int i=0; i<numRows; i++){
-            for(int j=0; j<numCols; j++){
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numCols; j++) {
                 this.cells[i][j] = new Cell(context, gg.grid[i][j]);
             }
         }
-        for(int i=0; i<cells.length; i++){
-            for(int j=0; j<cells[0].length; j++){
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[0].length; j++) {
                 addView(cells[i][j], GetCellWidth(), GetCellWidth());
             }
         }
-        stack=new ArrayList<>();
+        stack = new ArrayList<>();
         stack.add(cells[startCell.i][startCell.j]);
         cells[startCell.i][startCell.j].view.setBackgroundColor(selectedColor);
-        cells[startCell.i][startCell.j].visited=true;
+        cells[startCell.i][startCell.j].visited = true;
         addAdjacent(startCell.i, startCell.j);
     }
 
     public void hint() {
         //restarty有问题
-        if(track.size()==0){
+        if (track.size() == 0) {
             return;
         }
-        int count =0;
-        while(count<3){
-            if(track.size()>0) {
+        int count = 0;
+        while (count < 3) {
+            if (track.size() > 0) {
                 Node n = track.get(0);
                 cells[n.i][n.j].setBackgroundColor(Color.RED);
                 track.remove(0);

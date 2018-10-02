@@ -40,44 +40,26 @@ public class MainActivity extends AppCompatActivity {
     private int marginLeft;
     private int marginRight;
 
-    private static final String ISFIRSTIN_FILE="firstinfile";
-    /*记录的配置值名*/
-    private static final String ISFIRSTIN="isFirstIn";
-    /*记录是不是第一次进入的配置文件值*/
-    private  boolean isFirstIn=true;
-    private SharedPreferences first_index;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        first_index=getSharedPreferences(ISFIRSTIN_FILE,MODE_PRIVATE);
-        first_index.edit().clear().apply();
-        isFirstIn=first_index.getBoolean(ISFIRSTIN, true);
         mcontext = this;
     }
 
     public void endlessMode(View view) {
         Log.d("", "endless");
         this.view = view;
-        if (isFirstIn) {
-            setContentView(R.layout.activity_tutorial);
-            tutorialGridLayout = findViewById(R.id.tutorialGameView);
-            first_index.edit().putBoolean(ISFIRSTIN,false).apply();
-            isFirstIn=first_index.getBoolean(ISFIRSTIN, false);
-        }
-        else{
-            setContentView(R.layout.activity_setting);
-            tvMapWidth = (TextView) findViewById(R.id.mapWidth);
-            width = Integer.parseInt(tvMapWidth.getText().toString());
-            btnWidthMinus = (ImageButton) findViewById(R.id.btnWidthMinus);
-            btnWidthPlus = (ImageButton) findViewById(R.id.btnWidthPlus);
-            gridLayout = findViewById(R.id.mapPreview);
-            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) gridLayout.getLayoutParams();
-            marginLeft = lp.leftMargin;
-            marginRight = lp.rightMargin;
-            setTvMapWidth();
-        }
+        setContentView(R.layout.activity_setting);
+        tvMapWidth = (TextView) findViewById(R.id.mapWidth);
+        width = Integer.parseInt(tvMapWidth.getText().toString());
+        btnWidthMinus = (ImageButton) findViewById(R.id.btnWidthMinus);
+        btnWidthPlus = (ImageButton) findViewById(R.id.btnWidthPlus);
+        gridLayout = findViewById(R.id.mapPreview);
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) gridLayout.getLayoutParams();
+        marginLeft = lp.leftMargin;
+        marginRight = lp.rightMargin;
+        setTvMapWidth();
 
     }
 
