@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     String TAG = "MainActivity";
     GameView gameView;
     GridLayout gridLayout;
+    LinearLayout linearLayout;
     private TextView tvMapWidth;
     private static int width;
     private Context mcontext;
@@ -58,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
         btnWidthMinus = (ImageButton) findViewById(R.id.btnWidthMinus);
         btnWidthPlus = (ImageButton) findViewById(R.id.btnWidthPlus);
         gridLayout = findViewById(R.id.mapPreview);
-        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) gridLayout.getLayoutParams();
+        linearLayout =findViewById(R.id.mapPreviewParent);
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
         marginLeft = lp.leftMargin;
         marginRight = lp.rightMargin;
         setTvMapWidth();

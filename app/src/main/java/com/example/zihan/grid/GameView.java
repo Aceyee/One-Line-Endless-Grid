@@ -59,7 +59,7 @@ public class GameView extends GridLayout{
             //Log.d(TAG, "initGame: "+attrs.getAttributeResourceValue());
             cellColor = getResources().getColor(R.color.cellColor);
             defaultColor = getResources().getColor(R.color.defaultColor);
-            selectedColor = getResources().getColor(R.color.selectedColor);
+            selectedColor = getResources().getColor(R.color.colorBlue);
             halfSelectColor = getResources().getColor(R.color.halfSelectedColor);
             transparent = getResources().getColor(R.color.transparent);
         }

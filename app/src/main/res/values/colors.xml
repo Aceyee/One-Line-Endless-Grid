@@ -3,10 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorBlue">#009de9</color>
 
-
-    <color name="cellColor">#ffffffff</color>
+    <color name="cellColor">#ffefd4</color>
     <color name="cellColor2">#ffeee4da</color>
+    <color name="cellColor3">#ffffffff</color>
 
     <color name="defaultColor">#ffbbadc0</color>
     <color name="selectedColor">#ffccc4da</color>
