@@ -3,12 +3,8 @@ package com.example.zihan.grid;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Debug;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -23,14 +19,11 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     String TAG = "MainActivity";
     GameView gameView;
-    View view;
     GridLayout gridLayout;
-    GridLayout tutorialGridLayout;
     private TextView tvMapWidth;
     private static int width;
     private Context mcontext;
@@ -45,12 +38,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mcontext = this;
+        endlessMode();
     }
 
-    public void endlessMode(View view) {
+    public void endlessMode() {
         Log.d("", "endless");
-        this.view = view;
-        setContentView(R.layout.activity_setting);
+        setContentView(R.layout.activity_main);
         tvMapWidth = (TextView) findViewById(R.id.mapWidth);
         width = Integer.parseInt(tvMapWidth.getText().toString());
         btnWidthMinus = (ImageButton) findViewById(R.id.btnWidthMinus);
@@ -60,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         marginLeft = lp.leftMargin;
         marginRight = lp.rightMargin;
         setTvMapWidth();
-
     }
 
     private void showpopupWindow(View v) {
@@ -90,14 +82,6 @@ public class MainActivity extends AppCompatActivity {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha; // 0.0~1.0
         getWindow().setAttributes(lp);
-    }
-
-    public void aboutMe(View view) {
-        Log.d("", "about");
-    }
-
-    public void instruction(View view) {
-        Log.d("", "instruction");
     }
 
     public void Next(View view) {
@@ -134,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         gridLayout.setColumnCount(width);
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < width; j++) {
-                Cell cell = new Cell(view.getContext(), i, j);
+                Cell cell = new Cell(mcontext, i, j);
                 gridLayout.addView(cell, GetCellWidth(), GetCellWidth());
             }
         }
@@ -176,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 setContentView(R.layout.activity_main);
+                endlessMode();
             }
         });
         dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -185,5 +170,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         dialog.show();
+    }
+
+    public void tutorial(View view) {
+        width=0;
+        setContentView(R.layout.activity_tutorial);
     }
 }

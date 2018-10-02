@@ -25,7 +25,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="endlessMode"
+                android:onClick="returnMain"
                 android:layout_margin="30dp"
                 android:textSize="32sp"
                 android:text="跳过教程>>"
