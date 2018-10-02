@@ -44,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mcontext = this;
         endlessMode();
+        animation();
+    }
+
+    private void animation() {
     }
 
     public void endlessMode() {
