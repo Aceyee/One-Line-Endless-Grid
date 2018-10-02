@@ -1,8 +1,6 @@
 package com.example.zihan.grid;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private int marginLeft;
     private int marginRight;
 
+    private CustomDialog.Builder builder;
+    private CustomDialog mDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void animation() {
+
     }
+
+
 
     public void endlessMode() {
         Log.d("", "endless");
@@ -163,24 +166,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void returnMain(View view) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(view.getContext());
-        dialog.setTitle("标题");
-        dialog.setMessage("返回主菜单吗");
-        dialog.setCancelable(false);
-        dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        builder = new CustomDialog.Builder(this);
+        showTwoButtonDialog("返回主菜单吗", null, null, new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(View v) {
+                mDialog.dismiss();
                 setContentView(R.layout.activity_main);
                 endlessMode();
+                //这里写自定义处理XXX
             }
-        });
-        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        }, new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
+            public void onClick(View v) {
+                mDialog.dismiss();
+                //这里写自定义处理XXX
             }
         });
-        dialog.show();
+    }
+    private void showTwoButtonDialog(String alertText, String confirmText, String cancelText, View.OnClickListener conFirmListener, View.OnClickListener cancelListener) {
+        mDialog = builder.setMessage(alertText)
+                .setPositiveButton(confirmText, conFirmListener)
+                .setNegativeButton(cancelText, cancelListener)
+                .createTwoButtonDialog();
+        mDialog.show();
     }
 
     public void tutorial(View view) {

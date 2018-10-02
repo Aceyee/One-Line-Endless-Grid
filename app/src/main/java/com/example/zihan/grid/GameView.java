@@ -16,7 +16,8 @@ import java.util.ArrayList;
 public class GameView extends GridLayout{
     Cell [][] cells;
     Cell startCell;
-    AlertDialog.Builder dialog;
+    private CustomDialog.Builder builder;
+    private CustomDialog mDialog;
     Context context;
     int cellColor;
     int defaultColor;
@@ -144,29 +145,35 @@ public class GameView extends GridLayout{
     }
 
     private void complete() {
-        Log.d(TAG, "onTouch: 过关！");
+        //        Log.d(TAG, "onTouch: 过关！");
         if(!dialogShowing) {
-            dialogShowing=true;
-            dialog = new AlertDialog.Builder(context);
-            dialog.setTitle("标题");
-            dialog.setMessage("具体信息");
-            dialog.setCancelable(false);
-            dialog.setPositiveButton("下一关", new DialogInterface.OnClickListener() {
+            dialogShowing = true;
+            builder = new CustomDialog.Builder(context);
+            showTwoButtonDialog("返回主菜单吗", "下一关", "返回主菜单", new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
+                public void onClick(View v) {
+                    mDialog.dismiss();
                     dialogShowing=false;
                     startGame();
+                    //这里写自定义处理XXX
                 }
-            });
-            dialog.setNegativeButton("返回主菜单", new DialogInterface.OnClickListener() {
+            }, new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
+                public void onClick(View v) {
+                    mDialog.dismiss();
+                    //这里写自定义处理XXX
                 }
             });
-            dialog.show();
-        }else{//dialogShowing == true
+        }else{  //dialogshow == true
 
         }
+    }
+    private void showTwoButtonDialog(String alertText, String confirmText, String cancelText, View.OnClickListener conFirmListener, View.OnClickListener cancelListener) {
+        mDialog = builder.setMessage(alertText)
+                .setPositiveButton(confirmText, conFirmListener)
+                .setNegativeButton(cancelText, cancelListener)
+                .createTwoButtonDialog();
+        mDialog.show();
     }
 
     private int getIndexI(float n){
