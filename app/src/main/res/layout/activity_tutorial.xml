@@ -28,7 +28,7 @@
                 android:onClick="returnMain"
                 android:layout_margin="30dp"
                 android:textSize="32sp"
-                android:text="跳过教程>>"
+                android:text="@string/skiptutorial"
                 android:background="@color/transparent" />
         </LinearLayout>
     </LinearLayout>

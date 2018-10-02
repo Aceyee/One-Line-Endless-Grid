@@ -20,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
     String TAG = "MainActivity";
     GameView gameView;
@@ -36,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Locale locale = Locale.getDefault();
+//        String lang = locale.getLanguage() + "-" + locale.getCountry();
+        Log.d(TAG, "onCreate: "+locale.toString());
         setContentView(R.layout.activity_main);
         mcontext = this;
         endlessMode();

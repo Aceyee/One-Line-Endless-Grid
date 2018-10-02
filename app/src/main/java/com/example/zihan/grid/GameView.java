@@ -28,6 +28,7 @@ public class GameView extends GridLayout{
     private ArrayList<Cell> arrayList;
     private ArrayList<Cell> stack;
     private ArrayList<Node> track;
+    private boolean dialogShowing=false;
     GridGenerator gg;
     String TAG="";
 
@@ -84,7 +85,7 @@ public class GameView extends GridLayout{
                             cells[iindex][jindex].visited = true;
                             stack.add(cells[iindex][jindex]);
                             if(checkComplete()){
-                                complete();
+                                return true;
                             }
                             addAdjacent(iindex,jindex);
                         }else if(stack.contains(cells[iindex][jindex])){
@@ -144,23 +145,28 @@ public class GameView extends GridLayout{
 
     private void complete() {
         Log.d(TAG, "onTouch: 过关！");
-        dialog = new AlertDialog.Builder(context);
-        dialog.setTitle("标题");
-        dialog.setMessage("具体信息");
-        dialog.setCancelable(false);
-        dialog.setPositiveButton("继续", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                startGame();
-            }
-        });
-        dialog.setNegativeButton("退出", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        if(!dialogShowing) {
+            dialogShowing=true;
+            dialog = new AlertDialog.Builder(context);
+            dialog.setTitle("标题");
+            dialog.setMessage("具体信息");
+            dialog.setCancelable(false);
+            dialog.setPositiveButton("下一关", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogShowing=false;
+                    startGame();
+                }
+            });
+            dialog.setNegativeButton("返回主菜单", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
+            dialog.show();
+        }else{//dialogShowing == true
 
-            }
-        });
-        dialog.show();
+        }
     }
 
     private int getIndexI(float n){
@@ -194,12 +200,10 @@ public class GameView extends GridLayout{
             for (int j=0; j<numCols; j++){
                 if(!cells[i][j].block && !cells[i][j].visited ){
                     return false;
-//                    Log.d(TAG, "checkComplete: false");
                 }
             }
         }
         return true;
-//        Log.d(TAG, "checkComplete: true");
     }
 
     private void addAdjacent(int i, int j){
