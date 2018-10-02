@@ -16,7 +16,8 @@ public class GridGenerator {
     public ArrayList<Node> track;
 
     public GridGenerator(Context context){
-        grid=new Cell[3][4];
+        this.grid=new Cell[3][3];
+        this.track = new ArrayList<>();
         for(int i=0; i<grid.length; i++){
             for(int j=0; j<grid[0].length; j++){
                 Cell c = new Cell(context, i, j);
@@ -29,7 +30,6 @@ public class GridGenerator {
     public GridGenerator(Context context, int height, int width){
         this.height=height;
         this.width=width;
-        track = new ArrayList<>();
         while(true){
             grid=new Cell[height][width];
             map = new int[height][width];
@@ -78,6 +78,7 @@ public class GridGenerator {
 //        int randomI=0;
 //        int randomJ=0;
         start = new Cell(context, randomI, randomJ);
+        track = new ArrayList<>();
         ArrayList<Node> arrayList;
         int curI = randomI;
         int curJ = randomJ;

@@ -50,7 +50,6 @@ public class GameView extends GridLayout{
         this.context =context;
         this.numRows=MainActivity.getWidth();
         this.numCols=MainActivity.getWidth();
-        this.cells = new Cell[numRows][numCols];
         if(attrs==null) {
 //            cellColor = 0xffeee4da;
 //            defaultColor = 0xffbbadc0;
@@ -232,8 +231,19 @@ public class GameView extends GridLayout{
 
     public void startGame() {
         removeAllViews();
-        gg = new GridGenerator(getContext(), this.numRows, this.numCols);
-        this.track = gg.track;
+        if(numCols==0 && numCols==0){
+            gg = new GridGenerator(getContext());
+            this.numCols=3;
+            this.numRows=3;
+        }else {
+            gg = new GridGenerator(getContext(), this.numRows, this.numCols);
+        }
+        this.track = new ArrayList<>();
+        this.cells = new Cell[numRows][numCols];
+        for(int i=0; i<gg.track.size(); i++){
+            Node n = gg.track.get(i);
+            this.track.add(new Node(n.i, n.j));
+        }
         for(int i=0; i<numRows; i++){
             for(int j=0; j<numCols; j++){
                 this.cells[i][j] = new Cell(context, gg.grid[i][j]);
@@ -268,6 +278,11 @@ public class GameView extends GridLayout{
 
     public void restart(){
         removeAllViews();
+        track = new ArrayList<>();
+        for(int i=0; i<gg.track.size(); i++){
+            Node n = gg.track.get(i);
+            this.track.add(new Node(n.i, n.j));
+        }
         for(int i=0; i<numRows; i++){
             for(int j=0; j<numCols; j++){
                 this.cells[i][j] = new Cell(context, gg.grid[i][j]);
@@ -286,6 +301,7 @@ public class GameView extends GridLayout{
     }
 
     public void hint() {
+        //restarty有问题
         if(track.size()==0){
             return;
         }
@@ -295,8 +311,8 @@ public class GameView extends GridLayout{
                 Node n = track.get(0);
                 cells[n.i][n.j].setBackgroundColor(Color.RED);
                 track.remove(0);
-                count++;
             }
+            count++;
         }
     }
 }
