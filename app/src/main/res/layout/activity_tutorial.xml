@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient1"
@@ -32,4 +32,10 @@
                 android:background="@color/transparent" />
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+    <ViewStub
+        android:id="@+id/guide_root_slide"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout="@layout/guide_root_slide_left_right"/>
+</RelativeLayout>

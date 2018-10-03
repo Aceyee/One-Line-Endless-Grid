@@ -10,12 +10,14 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewStub;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.Locale;
@@ -36,23 +38,14 @@ public class MainActivity extends AppCompatActivity {
 
     private CustomDialog.Builder builder;
     private CustomDialog mDialog;
+    ViewStub stubGuideSlide;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Locale locale = Locale.getDefault();
-//        String lang = locale.getLanguage() + "-" + locale.getCountry();
-        Log.d(TAG, "onCreate: "+locale.toString());
         setContentView(R.layout.activity_main);
         mcontext = this;
         endlessMode();
-        animation();
     }
-
-    private void animation() {
-
-    }
-
-
 
     public void endlessMode() {
         Log.d("", "endless");
@@ -194,5 +187,20 @@ public class MainActivity extends AppCompatActivity {
     public void tutorial(View view) {
         width=0;
         setContentView(R.layout.activity_tutorial);
+        stubGuideSlide = (ViewStub) findViewById(R.id.guide_root_slide);
+        try {
+            final View guideSlideView = stubGuideSlide.inflate();
+            RelativeLayout rl = (RelativeLayout) guideSlideView.findViewById(R.id.guide_root);
+            if (rl != null) {
+                rl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        guideSlideView.setVisibility(View.GONE);
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

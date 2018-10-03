@@ -49,8 +49,9 @@
                 android:orientation="horizontal" >
 
                 <Button
-                    android:id="@+id/positiveButton"
-                    style="@style/text_15_ffffff_sdw"
+                    android:id="@+id/negativeButton"
+                    style="@style/text_15_666666_sdw"
+                    android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="45dp"
@@ -58,13 +59,16 @@
                     android:gravity="center" />
 
                 <Button
-                    android:id="@+id/negativeButton"
-                    style="@style/text_15_666666_sdw"
+                    android:id="@+id/positiveButton"
+                    style="@style/text_15_ffffff_sdw"
+                    android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="45dp"
-                    android:background="@color/cellColor3"
+                    android:background="@color/colorBlue"
                     android:gravity="center" />
+
+
             </LinearLayout>
 
             <LinearLayout
