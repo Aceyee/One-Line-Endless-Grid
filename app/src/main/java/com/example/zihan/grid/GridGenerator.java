@@ -29,7 +29,7 @@ public class GridGenerator {
         grid[1][0].block=true;
         grid[1][2].block=true;
         grid[2][0].block=true;
-        track.add(new Node(0,0));
+//        track.add(new Node(0,0));
         track.add(new Node(0,1));
         track.add(new Node(1,1));
         track.add(new Node(2,1));
@@ -62,6 +62,7 @@ public class GridGenerator {
                 break;
             }
         }
+        track.remove(0);
     }
 
     private void setMap() {

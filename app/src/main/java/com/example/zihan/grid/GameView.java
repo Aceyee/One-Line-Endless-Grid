@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.GridLayout;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class GameView extends GridLayout{
     int cellColor;
     int defaultColor;
     int selectedColor;
-    int halfSelectColor;
+    int hintColor;
     int transparent;
     public int numRows;
     public int numCols;
@@ -65,7 +66,7 @@ public class GameView extends GridLayout{
             cellColor = getResources().getColor(R.color.cellColor);
             defaultColor = getResources().getColor(R.color.defaultColor);
             selectedColor = getResources().getColor(R.color.colorBlue);
-            halfSelectColor = getResources().getColor(R.color.halfSelectedColor);
+            hintColor = getResources().getColor(R.color.hintColor);
             transparent = getResources().getColor(R.color.transparent);
         }
         setBackgroundGrid();
@@ -323,7 +324,12 @@ public class GameView extends GridLayout{
         while(count<3){
             if(track.size()>0) {
                 Node n = track.get(0);
-                cells[n.i][n.j].setBackgroundColor(Color.RED);
+//                cells[n.i][n.j].view.setBackgroundColor(0x55009de9);
+                View view = new View(context);
+                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(-1, -1);
+                lp.setMargins(10,10,0,0);
+                view.setBackgroundColor(hintColor);
+                cells[n.i][n.j].addView(view, lp);
                 track.remove(0);
             }
             count++;
