@@ -28,8 +28,9 @@ public class GameView extends GridLayout{
     public int numCols;
     private ArrayList<Cell> arrayList;
     private ArrayList<Cell> stack;
-    private ArrayList<Node> track;
+    public ArrayList<Node> track;
     private boolean dialogShowing=false;
+    private boolean isTutorial=false;
     GridGenerator gg;
     String TAG="";
 
@@ -52,6 +53,9 @@ public class GameView extends GridLayout{
         this.context =context;
         this.numRows=MainActivity.getWidth();
         this.numCols=MainActivity.getWidth();
+        if(numRows==3 && numCols==3){
+            isTutorial=true;
+        }
         if(attrs==null) {
 //            cellColor = 0xffeee4da;
 //            defaultColor = 0xffbbadc0;
@@ -242,10 +246,9 @@ public class GameView extends GridLayout{
 
     public void startGame() {
         removeAllViews();
-        if(numCols==0 && numCols==0){
+        if(isTutorial){
             gg = new GridGenerator(getContext());
-            this.numCols=3;
-            this.numRows=3;
+            isTutorial=false;
         }else {
             gg = new GridGenerator(getContext(), this.numRows, this.numCols);
         }

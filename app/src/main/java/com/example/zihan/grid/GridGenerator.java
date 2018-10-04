@@ -18,12 +18,23 @@ public class GridGenerator {
     public GridGenerator(Context context){
         this.grid=new Cell[3][3];
         this.track = new ArrayList<>();
+
         for(int i=0; i<grid.length; i++){
             for(int j=0; j<grid[0].length; j++){
                 Cell c = new Cell(context, i, j);
                 grid[i][j] = c;
             }
         }
+        grid[0][2].block=true;
+        grid[1][0].block=true;
+        grid[1][2].block=true;
+        grid[2][0].block=true;
+        track.add(new Node(0,0));
+        track.add(new Node(0,1));
+        track.add(new Node(1,1));
+        track.add(new Node(2,1));
+        track.add(new Node(2,2));
+
         start = new Cell(context, 0, 0);
     }
 

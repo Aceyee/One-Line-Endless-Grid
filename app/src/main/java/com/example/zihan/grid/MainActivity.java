@@ -1,8 +1,13 @@
 package com.example.zihan.grid;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.graphics.drawable.AnimationUtilsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -12,14 +17,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.PathInterpolator;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private CustomDialog.Builder builder;
     private CustomDialog mDialog;
     ViewStub stubGuideSlide;
+    private ImageView finger;
+    GameView tutorialGameView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,6 +162,14 @@ public class MainActivity extends AppCompatActivity {
         return (cellWidth - 10) / width;
     }
 
+    private int GetCellWidth2() {
+        DisplayMetrics displayMetrics;
+        displayMetrics = getResources().getDisplayMetrics();
+        int cellWidth;
+        cellWidth = displayMetrics.widthPixels - marginLeft/5 - marginRight/5;
+        return (cellWidth - 10) / width;
+    }
+
     public void hint(View view) {
         gameView.hint();
     }
@@ -185,12 +205,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tutorial(View view) {
-        width=0;
+        width=3;
         setContentView(R.layout.activity_tutorial);
         stubGuideSlide = (ViewStub) findViewById(R.id.guide_root_slide);
+        tutorialGameView=(GameView)findViewById(R.id.tutorialGameView);
         try {
             final View guideSlideView = stubGuideSlide.inflate();
             RelativeLayout rl = (RelativeLayout) guideSlideView.findViewById(R.id.guide_root);
+
+            finger=(ImageView)findViewById(R.id.ivFinger);
             if (rl != null) {
                 rl.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -199,8 +222,29 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
+
+            Path path = new Path();
+            float cellWidth = (float)GetCellWidth2();
+            float x = cellWidth;
+            float y = cellWidth;
+
+//            Log.d(TAG, "tutorial: "+ tutorialGameView.getTop());
+
+            path.moveTo(10 + 0.5f * x,1.5f * y);
+            path.rLineTo(10+1.0f * x, 0);
+            path.rLineTo(0, 2.0f *y);
+            path.rLineTo(10+1.0f * x, 0);
+
+            ObjectAnimator objectAnimator = new ObjectAnimator();
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                objectAnimator = ObjectAnimator.ofFloat(finger, "x", "y", path);
+            }
+            objectAnimator.setDuration(3000);
+            objectAnimator.setRepeatCount(2);
+            objectAnimator.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 }
