@@ -107,7 +107,6 @@ public class GridGenerator {
             }else {
                 arrayList = getAdjacent(curI, curJ);
             }
-
             if(arrayList.size()==2){
                 int i1= arrayList.get(0).i;
                 int j1= arrayList.get(0).j;

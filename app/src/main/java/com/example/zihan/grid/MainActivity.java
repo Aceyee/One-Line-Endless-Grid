@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private int marginRight;
 
     private CustomDialog.Builder builder;
-    private CustomDialog mDialog;
+    public static CustomDialog mDialog;
     ViewStub stubGuideSlide;
     private ImageView finger;
     GameView tutorialGameView;
@@ -110,6 +110,24 @@ public class MainActivity extends AppCompatActivity {
     public void start(View view) {
         setContentView(R.layout.activity_game);
         gameView = findViewById(R.id.gameView);
+
+        builder = new CustomDialog.Builder(this);
+        showTwoButtonDialog("通关", "下一关", "返回主菜单", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameView.startGame();
+                mDialog.dismiss();
+                //这里写自定义处理XXX
+            }
+        }, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setContentView(R.layout.activity_main);
+                endlessMode();
+                mDialog.dismiss();
+                //这里写自定义处理XXX
+            }
+        });
         /*
         btnPause = (ImageButton) findViewById(R.id.btnPause);
         btnPause.setOnClickListener(new View.OnClickListener() {
@@ -195,13 +213,13 @@ public class MainActivity extends AppCompatActivity {
                 //这里写自定义处理XXX
             }
         });
+        mDialog.show();
     }
     private void showTwoButtonDialog(String alertText, String confirmText, String cancelText, View.OnClickListener conFirmListener, View.OnClickListener cancelListener) {
         mDialog = builder.setMessage(alertText)
                 .setPositiveButton(confirmText, conFirmListener)
                 .setNegativeButton(cancelText, cancelListener)
                 .createTwoButtonDialog();
-        mDialog.show();
     }
 
     public void tutorial(View view) {
@@ -209,6 +227,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tutorial);
         stubGuideSlide = (ViewStub) findViewById(R.id.guide_root_slide);
         tutorialGameView=(GameView)findViewById(R.id.tutorialGameView);
+
+        builder = new CustomDialog.Builder(this);
+        showTwoButtonDialog("通关", "下一关", "返回主菜单", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tutorialGameView.startGame();
+                mDialog.dismiss();
+                //这里写自定义处理XXX
+            }
+        }, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setContentView(R.layout.activity_main);
+                endlessMode();
+                mDialog.dismiss();
+                //这里写自定义处理XXX
+            }
+        });
+
         try {
             final View guideSlideView = stubGuideSlide.inflate();
             RelativeLayout rl = (RelativeLayout) guideSlideView.findViewById(R.id.guide_root);
@@ -239,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 objectAnimator = ObjectAnimator.ofFloat(finger, "x", "y", path);
             }
-            objectAnimator.setDuration(3000);
+            objectAnimator.setDuration(2000);
             objectAnimator.setRepeatCount(2);
             objectAnimator.start();
         } catch (Exception e) {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">走格子</string>
+    <string name="clear">过关</string>
     <string name="startgame">开始游戏</string>
     <string name="tutorial">游戏教学</string>
     <string name="mapsize">地图大小</string>

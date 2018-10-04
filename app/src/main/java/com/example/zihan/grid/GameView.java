@@ -1,9 +1,6 @@
 package com.example.zihan.grid;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -30,7 +27,6 @@ public class GameView extends GridLayout{
     private ArrayList<Cell> arrayList;
     private ArrayList<Cell> stack;
     public ArrayList<Node> track;
-    private boolean dialogShowing=false;
     private boolean isTutorial=false;
     GridGenerator gg;
     String TAG="";
@@ -150,35 +146,14 @@ public class GameView extends GridLayout{
     }
 
     private void complete() {
-        //        Log.d(TAG, "onTouch: 过关！");
-        if(!dialogShowing) {
-            dialogShowing = true;
-            builder = new CustomDialog.Builder(context);
-            showTwoButtonDialog("返回主菜单吗", "下一关", "返回主菜单", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mDialog.dismiss();
-                    dialogShowing=false;
-                    startGame();
-                    //这里写自定义处理XXX
-                }
-            }, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mDialog.dismiss();
-                    //这里写自定义处理XXX
-                }
-            });
-        }else{  //dialogshow == true
-
-        }
+        mDialog = MainActivity.mDialog;
+        mDialog.show();
     }
     private void showTwoButtonDialog(String alertText, String confirmText, String cancelText, View.OnClickListener conFirmListener, View.OnClickListener cancelListener) {
         mDialog = builder.setMessage(alertText)
                 .setPositiveButton(confirmText, conFirmListener)
                 .setNegativeButton(cancelText, cancelListener)
                 .createTwoButtonDialog();
-        mDialog.show();
     }
 
     private int getIndexI(float n){
