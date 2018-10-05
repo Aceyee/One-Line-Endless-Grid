@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
         displayMetrics = getResources().getDisplayMetrics();
         int cellWidth;
         cellWidth = displayMetrics.widthPixels - marginLeft/5 - marginRight/5;
-        return (cellWidth - 10) / width;
+        return (cellWidth - 5) / width;
     }
 
     public void hint(View view) {

@@ -296,13 +296,13 @@ public class GameView extends GridLayout{
             return;
         }
         int count =0;
-        while(count<3){
+        while(count<5){
             if(track.size()>0) {
                 Node n = track.get(0);
 //                cells[n.i][n.j].view.setBackgroundColor(0x55009de9);
                 View view = new View(context);
                 FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(-1, -1);
-                lp.setMargins(10,10,0,0);
+                lp.setMargins(5,5,0,0);
                 view.setBackgroundColor(hintColor);
                 cells[n.i][n.j].addView(view, lp);
                 track.remove(0);

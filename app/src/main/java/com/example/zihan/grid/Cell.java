@@ -45,7 +45,7 @@ public class Cell extends FrameLayout {
         view = new View(getContext());
         view.setBackgroundColor(getResources().getColor(R.color.cellColor));
         LayoutParams lp = new LayoutParams(-1, -1);
-        lp.setMargins(10,10,0,0);
+        lp.setMargins(5,5,0,0);
         addView(view, lp);
     }
 
@@ -59,4 +59,11 @@ public class Cell extends FrameLayout {
         }
         return false;
     }
+        /*
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.drawLine(0,0,100,100, paint);
+        setBackgroundColor(getResources().getColor(R.color.cellColor));
+    }*/
 }
