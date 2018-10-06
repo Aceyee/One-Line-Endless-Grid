@@ -32,8 +32,6 @@ public class GameView extends FrameLayout{
     private ArrayList<Cell> stack;
     public ArrayList<Node> track;
     private boolean isTutorial=false;
-    Cell curr;
-    Cell prev;
     GridGenerator gg;
     LineView lineView;
     String TAG="";
@@ -108,13 +106,15 @@ public class GameView extends FrameLayout{
                                     stack.remove(i);
                                 }
                             }
+
                             addAdjacent(iindex,jindex);
                         }
-//                        Log.d(TAG, "onClick: "+startX+" "+startY);
-//                        Log.d(TAG, "onClick: "+iindex+" "+jindex);
-//                        Log.d(TAG, "onClick: "+v.getTop()+" "+v.getLeft()+" "+v.getRight()+" "+v.getBottom());
+                        if(lineView!=null){
+                            removeView(lineView);
+                        }
+                        lineView = new LineView(context, stack, GetCellWidth());
+                        addView(lineView, getWidth(),getHeight());
                         break;
-
                     case MotionEvent.ACTION_MOVE:
                         offsetX = event.getX();
                         offsetY = event.getY();
@@ -124,16 +124,6 @@ public class GameView extends FrameLayout{
                             cells[iindex][jindex].view.setBackgroundColor(selectedColor);
                             cells[iindex][jindex].visited = true;
                             stack.add(cells[iindex][jindex]);
-                            prev = curr;
-                            curr = cells[iindex][jindex];
-                            if(lineView!=null){
-                                removeView(lineView);
-                            }
-                            lineView = new LineView(context, stack, GetCellWidth());
-                            addView(lineView, getWidth(),getHeight());
-//                            Log.d(TAG, "onTouch: "+prev.getX()+prev.getY());
-//                            Log.d(TAG, "onTouch: "+curr.getX()+curr.getY());
-
                             if(checkComplete()){
                                 complete();
                             }
@@ -146,10 +136,16 @@ public class GameView extends FrameLayout{
                                     cells[stack.get(i).i][stack.get(i).j].visited=false;
                                     cells[stack.get(i).i][stack.get(i).j].view.setBackgroundColor(cellColor);
                                     stack.remove(i);
+
                                 }
                             }
                             addAdjacent(iindex,jindex);
                         }
+                        if(lineView!=null){
+                            removeView(lineView);
+                        }
+                        lineView = new LineView(context, stack, GetCellWidth());
+                        addView(lineView, getWidth(),getHeight());
                         //cells[iindex][jindex].view.setBackgroundColor(selectedColor);
                         //cells[iindex][jindex].visited = true;
 //                        Log.d(TAG, "onClick: "+startX+" "+startY);
@@ -266,7 +262,6 @@ public class GameView extends FrameLayout{
         }
         stack=new ArrayList<>();
         stack.add(cells[startCell.i][startCell.j]);
-        curr = cells[startCell.i][startCell.j];
         cells[startCell.i][startCell.j].view.setBackgroundColor(selectedColor);
         cells[startCell.i][startCell.j].visited=true;
         addAdjacent(startCell.i, startCell.j);
