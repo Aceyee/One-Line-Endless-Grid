@@ -1,9 +1,6 @@
 package com.example.zihan.grid;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -235,7 +232,12 @@ public class GameView extends FrameLayout{
     }
 
     public void startGame() {
-        removeAllViews();
+        if(gridLayout!=null) {
+//            removeView(gridLayout);
+//            removeView(lineView);
+            gridLayout.removeAllViews();
+            this.removeAllViews();
+        }
         if(isTutorial){
             gg = new GridGenerator(getContext());
             isTutorial=false;
@@ -282,7 +284,10 @@ public class GameView extends FrameLayout{
     }
 
     public void restart(){
-        removeAllViews();
+        if(gridLayout!=null) {
+            gridLayout.removeAllViews();
+            this.removeAllViews();
+        }
         track = new ArrayList<>();
         for(int i=0; i<gg.track.size(); i++){
             Node n = gg.track.get(i);
@@ -295,13 +300,14 @@ public class GameView extends FrameLayout{
         }
         for(int i=0; i<cells.length; i++){
             for(int j=0; j<cells[0].length; j++){
-                addView(cells[i][j], GetCellWidth(), GetCellWidth());
+                gridLayout.addView(cells[i][j], GetCellWidth(), GetCellWidth());
             }
         }
         stack=new ArrayList<>();
         stack.add(cells[startCell.i][startCell.j]);
         cells[startCell.i][startCell.j].view.setBackgroundColor(selectedColor);
         cells[startCell.i][startCell.j].visited=true;
+        addView(gridLayout);
         addAdjacent(startCell.i, startCell.j);
     }
 
