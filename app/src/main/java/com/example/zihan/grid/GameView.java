@@ -1,6 +1,9 @@
 package com.example.zihan.grid;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -11,10 +14,11 @@ import android.widget.GridLayout;
 
 import java.util.ArrayList;
 
-public class GameView extends GridLayout{
+public class GameView extends FrameLayout{
     Cell [][] cells;
     Cell startCell;
     private CustomDialog.Builder builder;
+    GridLayout gridLayout;
     private CustomDialog mDialog;
     Context context;
     int cellColor;
@@ -28,7 +32,10 @@ public class GameView extends GridLayout{
     private ArrayList<Cell> stack;
     public ArrayList<Node> track;
     private boolean isTutorial=false;
+    Cell curr;
+    Cell prev;
     GridGenerator gg;
+    LineView lineView;
     String TAG="";
 
     public GameView(Context context) {
@@ -50,6 +57,7 @@ public class GameView extends GridLayout{
         this.context =context;
         this.numRows=MainActivity.getWidth();
         this.numCols=MainActivity.getWidth();
+        gridLayout = new GridLayout(context);
         if(numRows==3 && numCols==3){
             isTutorial=true;
         }
@@ -116,6 +124,16 @@ public class GameView extends GridLayout{
                             cells[iindex][jindex].view.setBackgroundColor(selectedColor);
                             cells[iindex][jindex].visited = true;
                             stack.add(cells[iindex][jindex]);
+                            prev = curr;
+                            curr = cells[iindex][jindex];
+                            if(lineView!=null){
+                                removeView(lineView);
+                            }
+                            lineView = new LineView(context, stack, GetCellWidth());
+                            addView(lineView, getWidth(),getHeight());
+//                            Log.d(TAG, "onTouch: "+prev.getX()+prev.getY());
+//                            Log.d(TAG, "onTouch: "+curr.getX()+curr.getY());
+
                             if(checkComplete()){
                                 complete();
                             }
@@ -240,17 +258,19 @@ public class GameView extends GridLayout{
             }
         }
         this.startCell = gg.start;
-        setColumnCount(numCols);
+        gridLayout.setColumnCount(numCols);
         for(int i=0; i<cells.length; i++){
             for(int j=0; j<cells[0].length; j++){
-                addView(cells[i][j], GetCellWidth(), GetCellWidth());
+                gridLayout.addView(cells[i][j], GetCellWidth(), GetCellWidth());
             }
         }
         stack=new ArrayList<>();
         stack.add(cells[startCell.i][startCell.j]);
+        curr = cells[startCell.i][startCell.j];
         cells[startCell.i][startCell.j].view.setBackgroundColor(selectedColor);
         cells[startCell.i][startCell.j].visited=true;
         addAdjacent(startCell.i, startCell.j);
+        addView(gridLayout);
         getGesture();
     }
 
