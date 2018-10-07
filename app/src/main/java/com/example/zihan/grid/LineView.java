@@ -25,11 +25,11 @@ public class LineView extends View{
 
     }
 
-    public LineView(Context context, ArrayList<Cell> stack, int width) {
+    public LineView(Context context, ArrayList<Cell> stack, int width, int color) {
         super(context);
         arrayList = stack;
         paint = new Paint();
-        paint.setColor(Color.RED);
+        paint.setColor(color);
         paint.setStrokeWidth(10);
         this.width = 0.5f * width;
     }
