@@ -23,6 +23,10 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -45,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
     ViewStub stubGuideSlide;
     private ImageView finger;
     GameView tutorialGameView;
+    private AdView mAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         mcontext = this;
         endlessMode();
     }
@@ -56,13 +60,19 @@ public class MainActivity extends AppCompatActivity {
     public void endlessMode() {
         Log.d("", "endless");
         setContentView(R.layout.activity_main);
+
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         tvMapWidth = (TextView) findViewById(R.id.mapWidth);
         width = Integer.parseInt(tvMapWidth.getText().toString());
         btnWidthMinus = (ImageButton) findViewById(R.id.btnWidthMinus);
         btnWidthPlus = (ImageButton) findViewById(R.id.btnWidthPlus);
         gridLayout = findViewById(R.id.mapPreview);
         linearLayout =findViewById(R.id.mapPreviewParent);
-        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) linearLayout.getLayoutParams();
         marginLeft = lp.leftMargin;
         marginRight = lp.rightMargin;
         setTvMapWidth();
