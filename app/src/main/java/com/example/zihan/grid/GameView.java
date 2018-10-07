@@ -304,24 +304,19 @@ public class GameView extends FrameLayout{
 //            Node n = gg.track.get(i);
 //            this.track.add(new Node(n.i, n.j));
 //        }
-        /*
+
         for(int i=0; i<numRows; i++){
             for(int j=0; j<numCols; j++){
                 this.cells[i][j] = new Cell(context, gg.grid[i][j]);
-                if(hintCells[i][j]){
-                    View view = new View(context);
-                    FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(-1, -1);
-                    lp.setMargins(5,5,0,0);
-                    view.setBackgroundColor(hintColor);
-                    cells[i][j].addView(view, lp);
-                }
             }
-        }*/
+        }
         for(int i=0; i<cells.length; i++){
             for(int j=0; j<cells[0].length; j++){
                 gridLayout.addView(cells[i][j], GetCellWidth(), GetCellWidth());
             }
         }
+        hintLineView = new LineView(context, hintArrayList, GetCellWidth(), hintColor);
+        this.addView(hintLineView, getWidth(), getHeight());
         stack=new ArrayList<>();
         stack.add(cells[startCell.i][startCell.j]);
         cells[startCell.i][startCell.j].view.setBackgroundColor(selectedColor);
@@ -335,18 +330,14 @@ public class GameView extends FrameLayout{
         if(track.size()==0){
             return;
         }
+        if(stack.size()>0){
+            restart();
+        }
         int count =0;
 
         while(count<5){
             if(track.size()>0) {
                 Node n = track.get(0);
-//                cells[n.i][n.j].view.setBackgroundColor(0x55009de9);
-                /*
-                View view = new View(context);
-                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(-1, -1);
-                lp.setMargins(5,5,0,0);
-                view.setBackgroundColor(hintColor);
-                cells[n.i][n.j].addView(view, lp);*/
                 hintCells[n.i][n.j] =true;
                 track.remove(0);
                 hintArrayList.add(cells[n.i][n.j]);
