@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class GameView extends FrameLayout{
     Cell [][] cells;
+    boolean[][] hintCells;
     Cell startCell;
     private CustomDialog.Builder builder;
     GridLayout gridLayout;
@@ -27,10 +28,15 @@ public class GameView extends FrameLayout{
     public int numCols;
     private ArrayList<Cell> arrayList;
     private ArrayList<Cell> stack;
+    ArrayList<Cell> hintArrayList;
     public ArrayList<Node> track;
+    public int hintCount=0;
     private boolean isTutorial=false;
+
+
     GridGenerator gg;
     LineView lineView;
+    LineView hintLineView;
     String TAG="";
 
     public GameView(Context context) {
@@ -232,6 +238,7 @@ public class GameView extends FrameLayout{
     }
 
     public void startGame() {
+
         if(gridLayout!=null) {
 //            removeView(gridLayout);
 //            removeView(lineView);
@@ -246,6 +253,7 @@ public class GameView extends FrameLayout{
         }
         this.track = new ArrayList<>();
         this.cells = new Cell[numRows][numCols];
+        this.hintCells = new boolean[numRows][numCols];
         for(int i=0; i<gg.track.size(); i++){
             Node n = gg.track.get(i);
             this.track.add(new Node(n.i, n.j));
@@ -263,7 +271,9 @@ public class GameView extends FrameLayout{
             }
         }
         stack=new ArrayList<>();
+        hintArrayList = new ArrayList<>();
         stack.add(cells[startCell.i][startCell.j]);
+        hintArrayList.add(cells[startCell.i][startCell.j]);
         cells[startCell.i][startCell.j].view.setBackgroundColor(selectedColor);
         cells[startCell.i][startCell.j].visited=true;
         addAdjacent(startCell.i, startCell.j);
@@ -288,14 +298,21 @@ public class GameView extends FrameLayout{
             gridLayout.removeAllViews();
             this.removeAllViews();
         }
-        track = new ArrayList<>();
-        for(int i=0; i<gg.track.size(); i++){
-            Node n = gg.track.get(i);
-            this.track.add(new Node(n.i, n.j));
-        }
+//        track = new ArrayList<>();
+//        for(int i=0; i<gg.track.size(); i++){
+//            Node n = gg.track.get(i);
+//            this.track.add(new Node(n.i, n.j));
+//        }
         for(int i=0; i<numRows; i++){
             for(int j=0; j<numCols; j++){
                 this.cells[i][j] = new Cell(context, gg.grid[i][j]);
+                if(hintCells[i][j]){
+                    View view = new View(context);
+                    FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(-1, -1);
+                    lp.setMargins(5,5,0,0);
+                    view.setBackgroundColor(hintColor);
+                    cells[i][j].addView(view, lp);
+                }
             }
         }
         for(int i=0; i<cells.length; i++){
@@ -317,6 +334,7 @@ public class GameView extends FrameLayout{
             return;
         }
         int count =0;
+
         while(count<5){
             if(track.size()>0) {
                 Node n = track.get(0);
@@ -326,9 +344,17 @@ public class GameView extends FrameLayout{
                 lp.setMargins(5,5,0,0);
                 view.setBackgroundColor(hintColor);
                 cells[n.i][n.j].addView(view, lp);
+                hintCells[n.i][n.j] =true;
                 track.remove(0);
+                hintArrayList.add(cells[n.i][n.j]);
+                hintCount++;
             }
             count++;
         }
+        if(hintLineView!=null){
+            this.removeView(hintLineView);
+        }
+        hintLineView = new LineView(context, hintArrayList, GetCellWidth());
+        this.addView(hintLineView, getWidth(), getHeight());
     }
 }

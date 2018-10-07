@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class LineView extends View{
     Paint paint;
@@ -38,18 +37,11 @@ public class LineView extends View{
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-//        Log.d(TAG, "onDraw: "+arrayList.get(0).getX()+" "+ arrayList.get(0).getY());
-//        Log.d(TAG, "onDraw: "+arrayList.get(1).getX()+" "+ arrayList.get(1).getY());
-
 
         for(int i=0; i<arrayList.size()-1;i++){
             Cell c1 =arrayList.get(i);
             Cell c2 = arrayList.get(i+1);
             canvas.drawLine(c1.getX()+width,c1.getY()+width,c2.getX()+width,c2.getY()+width, paint);
         }
-//        canvas.drawLine(100,100,1000,1000, paint);
-
-//        Log.d(TAG, "onDraw: "+ c1.getX()+" "+c1.getY()+" "+c2.getX()+" "+c2.getY());
-//        canvas.drawLine(c1.getX(),c1.getY(),c2.getX(),c2.getY(), paint);
     }
 }

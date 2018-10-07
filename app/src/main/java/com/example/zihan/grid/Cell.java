@@ -14,6 +14,7 @@ public class Cell extends FrameLayout {
     public int j;
     public boolean visited;
     public boolean block=false;
+    public boolean isHint=false;
 
     public Cell(Context context) {
         super(context);
