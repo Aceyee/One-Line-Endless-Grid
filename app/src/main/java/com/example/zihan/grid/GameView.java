@@ -150,10 +150,6 @@ public class GameView extends FrameLayout{
                         }
                         lineView = new LineView(context, stack, GetCellWidth(), Color.RED);
                         addView(lineView, getWidth(),getHeight());
-                        //cells[iindex][jindex].view.setBackgroundColor(selectedColor);
-                        //cells[iindex][jindex].visited = true;
-//                        Log.d(TAG, "onClick: "+startX+" "+startY);
-//                        Log.d(TAG, "onClick: "+iindex+" "+jindex);
                         break;
                     case MotionEvent.ACTION_UP:
                         break;

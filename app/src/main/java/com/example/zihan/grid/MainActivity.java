@@ -1,13 +1,10 @@
 package com.example.zihan.grid;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.graphics.drawable.AnimationUtilsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -17,9 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.PathInterpolator;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
