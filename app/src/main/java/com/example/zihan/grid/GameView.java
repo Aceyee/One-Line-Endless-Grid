@@ -89,39 +89,6 @@ public class GameView extends FrameLayout{
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()){
-                        /*
-                    case MotionEvent.ACTION_DOWN:
-                        startX = event.getX();
-                        startY = event.getY();
-                        jindex= getIndexJ(startX);
-                        iindex= getIndexI(startY);
-                        if(arrayList.contains(cells[iindex][jindex])) {
-                            cells[iindex][jindex].view.setBackgroundColor(selectedColor);
-                            cells[iindex][jindex].visited = true;
-                            stack.add(cells[iindex][jindex]);
-                            if(checkComplete()){
-                                return true;
-                            }
-                            addAdjacent(iindex,jindex);
-                        }else if(stack.contains(cells[iindex][jindex])){
-                            for(int i=stack.size()-1; i>=0;i--){
-                                if(stack.get(i).equals(cells[iindex][jindex])){
-                                    break;
-                                }else{
-                                    cells[stack.get(i).i][stack.get(i).j].visited=false;
-                                    cells[stack.get(i).i][stack.get(i).j].view.setBackgroundColor(cellColor);
-                                    stack.remove(i);
-                                }
-                            }
-
-                            addAdjacent(iindex,jindex);
-                        }
-                        if(lineView!=null){
-                            removeView(lineView);
-                        }
-                        lineView = new LineView(context, stack, GetCellWidth(),colorLine);
-                        addView(lineView, getWidth(),getHeight());
-                        break;*/
                     case MotionEvent.ACTION_MOVE:
                         offsetX = event.getX();
                         offsetY = event.getY();
@@ -297,11 +264,6 @@ public class GameView extends FrameLayout{
             gridLayout.removeAllViews();
             this.removeAllViews();
         }
-//        track = new ArrayList<>();
-//        for(int i=0; i<gg.track.size(); i++){
-//            Node n = gg.track.get(i);
-//            this.track.add(new Node(n.i, n.j));
-//        }
 
         for(int i=0; i<numRows; i++){
             for(int j=0; j<numCols; j++){
@@ -313,13 +275,14 @@ public class GameView extends FrameLayout{
                 gridLayout.addView(cells[i][j], GetCellWidth(), GetCellWidth());
             }
         }
-        hintLineView = new LineView(context, hintArrayList, GetCellWidth(), hintColor);
-        this.addView(hintLineView, getWidth(), getHeight());
+
         stack=new ArrayList<>();
         stack.add(cells[startCell.i][startCell.j]);
         cells[startCell.i][startCell.j].view.setBackgroundColor(selectedColor);
         cells[startCell.i][startCell.j].visited=true;
         addView(gridLayout);
+        hintLineView = new LineView(context, hintArrayList, GetCellWidth(), hintColor);
+        this.addView(hintLineView, getWidth(), getHeight());
         addAdjacent(startCell.i, startCell.j);
     }
 
