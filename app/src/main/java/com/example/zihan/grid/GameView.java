@@ -24,6 +24,7 @@ public class GameView extends FrameLayout{
     int defaultColor;
     int selectedColor;
     int hintColor;
+    int colorLine;
     int transparent;
     public int numRows;
     public int numCols;
@@ -74,6 +75,7 @@ public class GameView extends FrameLayout{
             selectedColor = getResources().getColor(R.color.colorBlue);
             hintColor = getResources().getColor(R.color.hintColor);
             transparent = getResources().getColor(R.color.transparent);
+            colorLine = getResources().getColor(R.color.colorLine);
         }
         setBackgroundGrid();
         startGame();
@@ -87,6 +89,7 @@ public class GameView extends FrameLayout{
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()){
+                        /*
                     case MotionEvent.ACTION_DOWN:
                         startX = event.getX();
                         startY = event.getY();
@@ -116,9 +119,9 @@ public class GameView extends FrameLayout{
                         if(lineView!=null){
                             removeView(lineView);
                         }
-                        lineView = new LineView(context, stack, GetCellWidth(),Color.RED);
+                        lineView = new LineView(context, stack, GetCellWidth(),colorLine);
                         addView(lineView, getWidth(),getHeight());
-                        break;
+                        break;*/
                     case MotionEvent.ACTION_MOVE:
                         offsetX = event.getX();
                         offsetY = event.getY();
@@ -140,7 +143,6 @@ public class GameView extends FrameLayout{
                                     cells[stack.get(i).i][stack.get(i).j].visited=false;
                                     cells[stack.get(i).i][stack.get(i).j].view.setBackgroundColor(cellColor);
                                     stack.remove(i);
-
                                 }
                             }
                             addAdjacent(iindex,jindex);
@@ -148,7 +150,7 @@ public class GameView extends FrameLayout{
                         if(lineView!=null){
                             removeView(lineView);
                         }
-                        lineView = new LineView(context, stack, GetCellWidth(), Color.RED);
+                        lineView = new LineView(context, stack, GetCellWidth(), colorLine);
                         addView(lineView, getWidth(),getHeight());
                         break;
                     case MotionEvent.ACTION_UP:

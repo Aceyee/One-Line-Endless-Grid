@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient1"
@@ -46,7 +46,16 @@
                 android:background="@color/transparent"/>
         </LinearLayout>
     </LinearLayout>
-
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-6463832285749725/5217852376">
+    </com.google.android.gms.ads.AdView>
 
     <!--
     <ImageButton
@@ -64,4 +73,4 @@
             android:layout_margin="10dp"
             android:src="@mipmap/ic_next"
             android:background="@color/transparent"/>-->
-</LinearLayout>
+</RelativeLayout>

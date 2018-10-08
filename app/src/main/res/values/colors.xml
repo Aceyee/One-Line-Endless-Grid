@@ -9,6 +9,7 @@
     <color name="cellColor2">#ffeee4da</color>
     <color name="cellColor3">#ffffffff</color>
 
+    <color name="colorLine">#ffffffff</color>
     <color name="defaultColor">#ffbbadc0</color>
     <color name="selectedColor">#ffccc4da</color>
     <color name="hintColor">#55009de9</color>

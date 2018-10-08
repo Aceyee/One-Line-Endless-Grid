@@ -31,6 +31,7 @@ public class LineView extends View{
         paint = new Paint();
         paint.setColor(color);
         paint.setStrokeWidth(10);
+        paint.setStrokeCap( Paint.Cap.ROUND );
         this.width = 0.5f * width;
     }
 

@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mcontext = this;
+        MobileAds.initialize(this, "ca-app-pub-6463832285749725~6032085069");
         endlessMode();
     }
 
@@ -61,10 +62,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d("", "endless");
         setContentView(R.layout.activity_main);
 
-        MobileAds.initialize(this, "ca-app-pub-6463832285749725~6032085069");
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
 
         tvMapWidth = (TextView) findViewById(R.id.mapWidth);
         width = Integer.parseInt(tvMapWidth.getText().toString());
@@ -113,6 +110,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void start(View view) {
         setContentView(R.layout.activity_game);
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         gameView = findViewById(R.id.gameView);
 
         builder = new CustomDialog.Builder(this);
