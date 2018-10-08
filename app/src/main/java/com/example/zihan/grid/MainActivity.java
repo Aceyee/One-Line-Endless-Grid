@@ -117,7 +117,10 @@ public class MainActivity extends AppCompatActivity {
         gameView = findViewById(R.id.gameView);
 
         builder = new CustomDialog.Builder(this);
-        showTwoButtonDialog("通关", "下一关", "返回主菜单", new View.OnClickListener() {
+        showTwoButtonDialog(getResources().getString(R.string.levelClear),
+                getResources().getString(R.string.nextLevel),
+                getResources().getString(R.string.backMain),
+                new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gameView.startGame();
@@ -203,7 +206,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void returnMain(View view) {
         builder = new CustomDialog.Builder(this);
-        showTwoButtonDialog("返回主菜单吗", null, null, new View.OnClickListener() {
+        showTwoButtonDialog( getResources().getString(R.string.returnMain)+"?",
+                getResources().getString(R.string.yes),
+                getResources().getString(R.string.no),
+                new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDialog.dismiss();
@@ -234,7 +240,10 @@ public class MainActivity extends AppCompatActivity {
         tutorialGameView=(GameView)findViewById(R.id.tutorialGameView);
 
         builder = new CustomDialog.Builder(this);
-        showTwoButtonDialog("通关", "下一关", "返回主菜单", new View.OnClickListener() {
+        showTwoButtonDialog( getResources().getString(R.string.levelClear),
+                getResources().getString(R.string.nextLevel),
+                getResources().getString(R.string.backMain),
+                new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tutorialGameView.startGame();
