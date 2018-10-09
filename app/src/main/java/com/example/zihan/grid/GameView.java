@@ -296,7 +296,7 @@ public class GameView extends FrameLayout{
         }
         int count =0;
 
-        while(count<5){
+        while(count<6){
             if(track.size()>0) {
                 Node n = track.get(0);
                 hintCells[n.i][n.j] =true;

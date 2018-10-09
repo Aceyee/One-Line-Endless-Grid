@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Grid</string>
+    <string name="app_name">One Line Draw:Grid</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="clear">Clear</string>
@@ -8,7 +8,7 @@
     <string name="mapsize">Map Size</string>
     <string name="levelClear">Level Clear</string>
     <string name="backMain">Return</string>
-    <string name="watchAd">Watch ADs</string>
+    <string name="watchAd">Watch ADs For Hints</string>
     <string name="returnMain">Return to Main Menu</string>
     <string name="nextLevel">Next Level</string>
 
