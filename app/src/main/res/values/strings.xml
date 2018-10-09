@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">Grid</string>
+    <string name="app_name">One Line Draw:Grid</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="clear">Clear</string>
+    <string name="startgame">Start</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="mapsize">Map Size</string>
+    <string name="levelClear">Level Clear</string>
+    <string name="backMain">Return</string>
+    <string name="watchAd">Watch ADs For Hints</string>
+    <string name="returnMain">Return to Main Menu</string>
+    <string name="nextLevel">Next Level</string>
+
+    <string name="skiptutorial"><![CDATA[Skip Tutorial>>]]></string>
 </resources>

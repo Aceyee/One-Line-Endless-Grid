@@ -1,27 +1,77 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient1"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     >
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:textSize="20dp"
-        android:text="下一关"
-        android:onClick="Next"/>
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:gravity="center"
         >
         <com.example.zihan.grid.GameView
             android:id="@+id/gameView"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             >
         </com.example.zihan.grid.GameView>
-    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="returnMain"
+                android:layout_margin="30dp"
+                android:src="@mipmap/ic_return"
+                android:background="@color/transparent" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="hint"
+                android:layout_margin="30dp"
+                android:src="@mipmap/ic_light"
+                android:background="@color/transparent" />
 
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="restart"
+                android:layout_margin="30dp"
+                android:src="@mipmap/ic_restart"
+                android:background="@color/transparent"/>
+        </LinearLayout>
+    </LinearLayout>
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+    </com.google.android.gms.ads.AdView>
 
-</LinearLayout>
+    <!--ads:adUnitId="ca-app-pub-6463832285749725/5217852376">-->
+    <!--
+    <ImageButton
+        android:id="@+id/btnPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@android:color/transparent"
+        android:src="@mipmap/ic_menu"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="Next"
+            android:layout_margin="10dp"
+            android:src="@mipmap/ic_next"
+            android:background="@color/transparent"/>-->
+</RelativeLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">一笔走格子</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="clear">过关</string>
+    <string name="startgame">开始游戏</string>
+    <string name="tutorial">游戏教学</string>
+    <string name="mapsize">地图大小</string>
+    <string name="levelClear">通关</string>
+    <string name="backMain">返回</string>
+    <string name="watchAd">观看广告获取提示</string>
+    <string name="returnMain">返回主菜单</string>
+    <string name="nextLevel">下一关</string>
+    <string name="skiptutorial"><![CDATA[跳过教程>>]]></string>
+</resources>

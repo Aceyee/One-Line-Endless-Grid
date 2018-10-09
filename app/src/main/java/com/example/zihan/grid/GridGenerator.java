@@ -13,15 +13,28 @@ public class GridGenerator {
     public Cell start;
     public int width;
     public int height;
+    public ArrayList<Node> track;
 
     public GridGenerator(Context context){
-        grid=new Cell[3][4];
+        this.grid=new Cell[3][3];
+        this.track = new ArrayList<>();
+
         for(int i=0; i<grid.length; i++){
             for(int j=0; j<grid[0].length; j++){
                 Cell c = new Cell(context, i, j);
                 grid[i][j] = c;
             }
         }
+        grid[0][2].block=true;
+        grid[1][0].block=true;
+        grid[1][2].block=true;
+        grid[2][0].block=true;
+//        track.add(new Node(0,0));
+        track.add(new Node(0,1));
+        track.add(new Node(1,1));
+        track.add(new Node(2,1));
+        track.add(new Node(2,2));
+
         start = new Cell(context, 0, 0);
     }
 
@@ -49,6 +62,7 @@ public class GridGenerator {
                 break;
             }
         }
+        track.remove(0);
     }
 
     private void setMap() {
@@ -76,12 +90,14 @@ public class GridGenerator {
 //        int randomI=0;
 //        int randomJ=0;
         start = new Cell(context, randomI, randomJ);
+        track = new ArrayList<>();
         ArrayList<Node> arrayList;
         int curI = randomI;
         int curJ = randomJ;
         while(true) {
             map[curI][curJ]=0;
-            Log.d(TAG, "generate2: "+curI +" "+curJ);
+            Log.d(TAG, "generate: "+curI +" "+curJ);
+            track.add(new Node(curI, curJ));
             updateAdjacent(curI, curJ);
             if((curI==1&&curJ==1)||
                     (curI==height-2&&curJ==1)||
@@ -91,7 +107,6 @@ public class GridGenerator {
             }else {
                 arrayList = getAdjacent(curI, curJ);
             }
-
             if(arrayList.size()==2){
                 int i1= arrayList.get(0).i;
                 int j1= arrayList.get(0).j;
