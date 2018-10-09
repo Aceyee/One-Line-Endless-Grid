@@ -1,9 +1,7 @@
 package com.example.zihan.grid;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 

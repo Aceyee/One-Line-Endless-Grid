@@ -1,7 +1,7 @@
 package com.example.zihan.grid;
 
 import android.content.Context;
-import android.util.Log;
+//import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -96,7 +96,7 @@ public class GridGenerator {
         int curJ = randomJ;
         while(true) {
             map[curI][curJ]=0;
-            Log.d(TAG, "generate: "+curI +" "+curJ);
+//            Log.d(TAG, "generate: "+curI +" "+curJ);
             track.add(new Node(curI, curJ));
             updateAdjacent(curI, curJ);
             if((curI==1&&curJ==1)||

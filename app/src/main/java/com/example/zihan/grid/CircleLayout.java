@@ -3,7 +3,7 @@ package com.example.zihan.grid;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -104,18 +104,18 @@ public class CircleLayout extends ViewGroup {
         int specSize=MeasureSpec.getSize(heightMeasureSpec);
         switch (specMode) {
             case MeasureSpec.AT_MOST:  // 子容器可以是声明大小内的任意大小
-                Log.e(TAG, "子容器可以是声明大小内的任意大小");
-                Log.e(TAG, "大小为:"+specSize);
+//                Log.e(TAG, "子容器可以是声明大小内的任意大小");
+//                Log.e(TAG, "大小为:"+specSize);
                 result=specSize;
                 break;
             case MeasureSpec.EXACTLY: //父容器已经为子容器设置了尺寸,子容器应当服从这些边界,不论子容器想要多大的空间.  比如EditTextView中的DrawLeft
-                Log.e(TAG, "父容器已经为子容器设置了尺寸,子容器应当服从这些边界,不论子容器想要多大的空间");
-                Log.e(TAG, "大小为:"+specSize);
+//                Log.e(TAG, "父容器已经为子容器设置了尺寸,子容器应当服从这些边界,不论子容器想要多大的空间");
+//                Log.e(TAG, "大小为:"+specSize);
                 result=specSize;
                 break;
             case MeasureSpec.UNSPECIFIED:  //父容器对于子容器没有任何限制,子容器想要多大就多大. 所以完全取决于子view的大小
-                Log.e(TAG, "父容器对于子容器没有任何限制,子容器想要多大就多大");
-                Log.e(TAG, "大小为:"+specSize);
+//                Log.e(TAG, "父容器对于子容器没有任何限制,子容器想要多大就多大");
+//                Log.e(TAG, "大小为:"+specSize);
                 result=1500;
                 break;
             default:
