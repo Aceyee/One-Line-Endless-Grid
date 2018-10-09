@@ -55,25 +55,26 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     GameView tutorialGameView;
     private AdView mAdView;
     private RewardedVideoAd mRewardedVideoAd;
+    private int numOfHint=3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mcontext = this;
-//        MobileAds.initialize(this, "ca-app-pub-6463832285749725~6032085069");
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+
+        MobileAds.initialize(this, "ca-app-pub-6463832285749725~6032085069");// My ID
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+        mRewardedVideoAd.setRewardedVideoAdListener(this);
+        loadRewardedVideoAd();
+
         endlessMode();
     }
     private void loadRewardedVideoAd() {
-        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",//Test ID
                 new AdRequest.Builder().build());
     }
     public void endlessMode() {
         Log.d("", "endless");
         setContentView(R.layout.activity_main);
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
-        mRewardedVideoAd.setRewardedVideoAdListener(this);
-        loadRewardedVideoAd();
-
 
         tvMapWidth = (TextView) findViewById(R.id.mapWidth);
         width = Integer.parseInt(tvMapWidth.getText().toString());
@@ -123,9 +124,9 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     public void start(View view) {
         setContentView(R.layout.activity_game);
 
-//        mAdView = findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//        mAdView.loadAd(adRequest);
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         gameView = findViewById(R.id.gameView);
 
         builder = new CustomDialog.Builder(this);
@@ -209,7 +210,17 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     }
 
     public void hint(View view) {
-        gameView.hint();
+        if(numOfHint>0){
+            gameView.hint();
+            numOfHint--;
+        }else {
+            if (mRewardedVideoAd.isLoaded()) {
+                mRewardedVideoAd.show();
+                Log.d(TAG, "hint: "+"loaded");
+            }else{
+                Log.d(TAG, "hint: "+"not loaded");
+            }
+        }
     }
 
     public void restart(View view) {
@@ -316,6 +327,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         Toast.makeText(this, "onRewarded! currency: " + reward.getType() + "  amount: " +
                 reward.getAmount(), Toast.LENGTH_SHORT).show();
         // Reward the user.
+        numOfHint+=3;
     }
 
     @Override
@@ -327,6 +339,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     @Override
     public void onRewardedVideoAdClosed() {
         Toast.makeText(this, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
+        loadRewardedVideoAd();
     }
 
     @Override
@@ -337,9 +350,6 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     @Override
     public void onRewardedVideoAdLoaded() {
         Toast.makeText(this, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
-        if (mRewardedVideoAd.isLoaded()) {
-            mRewardedVideoAd.show();
-        }
     }
 
     @Override
