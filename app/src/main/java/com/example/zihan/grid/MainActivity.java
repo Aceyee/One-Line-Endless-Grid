@@ -50,12 +50,14 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
     private CustomDialog.Builder builder;
     public static CustomDialog mDialog;
+    private CustomDialog.Builder adBuilder;
+    public CustomDialog adDialog;
     ViewStub stubGuideSlide;
     private ImageView finger;
     GameView tutorialGameView;
     private AdView mAdView;
     private RewardedVideoAd mRewardedVideoAd;
-    private int numOfHint=3;
+    private int numOfHint=6;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,6 +131,28 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         mAdView.loadAd(adRequest);
         gameView = findViewById(R.id.gameView);
 
+        adBuilder = new CustomDialog.Builder(this);
+        adShowTwoButtonDialog(getResources().getString(R.string.watchAd),
+                getResources().getString(R.string.yes),
+                getResources().getString(R.string.no),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mRewardedVideoAd.isLoaded()) {
+                            mRewardedVideoAd.show();
+                            Log.d(TAG, "hint: "+"loaded");
+                        }else{
+                            Log.d(TAG, "hint: "+"not loaded");
+                        }
+                        adDialog.dismiss();
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        adDialog.dismiss();
+                    }
+                });
+
         builder = new CustomDialog.Builder(this);
         showTwoButtonDialog(getResources().getString(R.string.levelClear),
                 getResources().getString(R.string.nextLevel),
@@ -137,8 +161,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             @Override
             public void onClick(View v) {
                 gameView.startGame();
+                if(numOfHint<8){
+                    numOfHint++;
+                }
                 mDialog.dismiss();
-                //这里写自定义处理XXX
             }
         }, new View.OnClickListener() {
             @Override
@@ -146,7 +172,6 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                 setContentView(R.layout.activity_main);
                 endlessMode();
                 mDialog.dismiss();
-                //这里写自定义处理XXX
             }
         });
         /*
@@ -213,12 +238,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         if(numOfHint>0){
             numOfHint = gameView.hint(numOfHint);
         }else {
-            if (mRewardedVideoAd.isLoaded()) {
-                mRewardedVideoAd.show();
-                Log.d(TAG, "hint: "+"loaded");
-            }else{
-                Log.d(TAG, "hint: "+"not loaded");
-            }
+            adDialog.show();
         }
     }
 
@@ -250,6 +270,13 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     }
     private void showTwoButtonDialog(String alertText, String confirmText, String cancelText, View.OnClickListener conFirmListener, View.OnClickListener cancelListener) {
         mDialog = builder.setMessage(alertText)
+                .setPositiveButton(confirmText, conFirmListener)
+                .setNegativeButton(cancelText, cancelListener)
+                .createTwoButtonDialog();
+    }
+
+    private void adShowTwoButtonDialog(String alertText, String confirmText, String cancelText, View.OnClickListener conFirmListener, View.OnClickListener cancelListener) {
+        adDialog = adBuilder.setMessage(alertText)
                 .setPositiveButton(confirmText, conFirmListener)
                 .setNegativeButton(cancelText, cancelListener)
                 .createTwoButtonDialog();
@@ -326,7 +353,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         Toast.makeText(this, "onRewarded! currency: " + reward.getType() + "  amount: " +
                 reward.getAmount(), Toast.LENGTH_SHORT).show();
         // Reward the user.
-        numOfHint+=3;
+        numOfHint+=6;
     }
 
     @Override
