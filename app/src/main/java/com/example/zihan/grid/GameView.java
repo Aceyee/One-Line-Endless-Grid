@@ -286,10 +286,10 @@ public class GameView extends FrameLayout{
         addAdjacent(startCell.i, startCell.j);
     }
 
-    public void hint() {
+    public int hint(int numHint) {
         //restarty有问题
         if(track.size()==0){
-            return;
+            return numHint;
         }
         if(stack.size()>0){
             restart();
@@ -311,5 +311,7 @@ public class GameView extends FrameLayout{
         }
         hintLineView = new LineView(context, hintArrayList, GetCellWidth(), hintColor);
         this.addView(hintLineView, getWidth(), getHeight());
+        numHint--;
+        return numHint;
     }
 }

@@ -211,8 +211,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
     public void hint(View view) {
         if(numOfHint>0){
-            gameView.hint();
-            numOfHint--;
+            numOfHint = gameView.hint(numOfHint);
         }else {
             if (mRewardedVideoAd.isLoaded()) {
                 mRewardedVideoAd.show();
