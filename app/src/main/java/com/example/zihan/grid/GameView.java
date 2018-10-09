@@ -1,7 +1,6 @@
 package com.example.zihan.grid;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -34,6 +33,7 @@ public class GameView extends FrameLayout{
     public ArrayList<Node> track;
     public int hintCount=0;
     private boolean isTutorial=false;
+    private boolean readyToRemove=false;
 
 
     GridGenerator gg;
@@ -98,11 +98,23 @@ public class GameView extends FrameLayout{
                             cells[iindex][jindex].view.setBackgroundColor(selectedColor);
                             cells[iindex][jindex].visited = true;
                             stack.add(cells[iindex][jindex]);
+
                             if(checkComplete()){
                                 complete();
                             }
                             addAdjacent(iindex,jindex);
-                        }else if(stack.contains(cells[iindex][jindex])){
+                        }
+                        else{
+                            int i=stack.size()-2;
+                            if(i>=0 && stack.get(i).equals(cells[iindex][jindex])){
+                                cells[stack.get(i+1).i][stack.get(i+1).j].visited=false;
+                                cells[stack.get(i+1).i][stack.get(i+1).j].view.setBackgroundColor(cellColor);
+                                stack.remove(i+1);
+                                addAdjacent(stack.get(i).i,stack.get(i).j);
+                            }
+                        }
+                        /*
+                        else if(stack.contains(cells[iindex][jindex])){
                             for(int i=stack.size()-1; i>=0;i--){
                                 if(stack.get(i).equals(cells[iindex][jindex])){
                                     break;
@@ -113,7 +125,7 @@ public class GameView extends FrameLayout{
                                 }
                             }
                             addAdjacent(iindex,jindex);
-                        }
+                        }*/
                         if(lineView!=null){
                             removeView(lineView);
                         }

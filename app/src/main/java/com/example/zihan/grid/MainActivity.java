@@ -8,7 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
+//import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                 new AdRequest.Builder().build());
     }
     public void endlessMode() {
-        Log.d("", "endless");
         setContentView(R.layout.activity_main);
 
         tvMapWidth = (TextView) findViewById(R.id.mapWidth);
@@ -140,9 +139,9 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                     public void onClick(View v) {
                         if (mRewardedVideoAd.isLoaded()) {
                             mRewardedVideoAd.show();
-                            Log.d(TAG, "hint: "+"loaded");
+//                            Log.d(TAG, "hint: "+"loaded");
                         }else{
-                            Log.d(TAG, "hint: "+"not loaded");
+//                            Log.d(TAG, "hint: "+"not loaded");
                         }
                         adDialog.dismiss();
                     }
