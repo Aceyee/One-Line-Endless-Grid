@@ -71,8 +71,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         endlessMode();
     }
     private void loadRewardedVideoAd() {
-        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",//Test ID
+        mRewardedVideoAd.loadAd("ca-app-pub-6463832285749725/4575101960",//My ID
                 new AdRequest.Builder().build());
+        //mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",//Test ID
+        //                new AdRequest.Builder().build());
     }
     public void endlessMode() {
         setContentView(R.layout.activity_main);
