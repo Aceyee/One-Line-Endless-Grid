@@ -7,8 +7,16 @@ This is a brain game. Just sweep your finger to beat all levels!
 # Construction
 
 ## Game View
+
+Game View includes cells and line views
+
 ## Map Generator
+
+Map Generator generates maps according to player's input
+
 ## Ads
+
+Ads includes Android's banner ad and reward ad
 
 # Author
 
