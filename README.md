@@ -7,7 +7,3 @@ This is a brain game. Just sweep your finger to beat all levels!
 ## Author
 
 * **Zihan Ye** - *Initial work* - [Aceyee](https://github.com/Aceyee)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
