@@ -2,7 +2,7 @@
 
 This is a brain game. Just sweep your finger to beat all levels!
 
-![Alt Text](https://github.com/Aceyee/Grid/blob/master/app/src/main/psd/demo.gif)
+![Alt Text](https://github.com/Aceyee/Grid/blob/master/app/src/main/psd/demo2.gif)
 
 ## Getting Started
 
