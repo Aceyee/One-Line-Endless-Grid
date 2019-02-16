@@ -13,9 +13,10 @@
         android:orientation="vertical"
         >
         <GridLayout
+            android:id="@+id/mapPreview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/mapPreview">
+            >
         </GridLayout>
 
         <LinearLayout
@@ -35,9 +36,9 @@
                 android:layout_gravity="center"
                 android:onClick="widthMinus"/>
             <TextView
+                android:id="@+id/mapWidth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/mapWidth"
                 android:text="6"
                 android:textSize="32sp"/>
             <ImageButton
@@ -51,9 +52,9 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btnStartGame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnStartGame"
             android:layout_margin="10dp"
             android:layout_gravity="center"
             android:textSize="32sp"
@@ -62,9 +63,9 @@
             android:background="@color/colorBlue"
             android:onClick="start"/>
         <Button
+            android:id="@+id/btnTutorial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnTutorial"
             android:layout_margin="10dp"
             android:layout_gravity="center"
             android:textSize="32sp"

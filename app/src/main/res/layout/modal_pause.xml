@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.zihan.grid.CircleLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.zihan.grid.old.CircleLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/gradient1">
@@ -27,5 +27,5 @@
         android:layout_height="wrap_content"
         android:background="@color/cellColor"
         android:text="4" />
-</com.example.zihan.grid.CircleLayout><!--
+</com.example.zihan.grid.old.CircleLayout><!--
     -->

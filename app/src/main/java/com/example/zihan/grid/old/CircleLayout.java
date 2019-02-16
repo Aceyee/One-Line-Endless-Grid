@@ -1,4 +1,4 @@
-package com.example.zihan.grid;
+package com.example.zihan.grid.old;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 //import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.zihan.grid.R;
 
 public class CircleLayout extends ViewGroup {
     private String TAG="";

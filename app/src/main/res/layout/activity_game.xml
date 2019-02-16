@@ -11,12 +11,12 @@
         android:orientation="vertical"
         android:gravity="center"
         >
-        <com.example.zihan.grid.GameView
+        <com.example.zihan.grid.old.GameView
             android:id="@+id/gameView"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             >
-        </com.example.zihan.grid.GameView>
+        </com.example.zihan.grid.old.GameView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

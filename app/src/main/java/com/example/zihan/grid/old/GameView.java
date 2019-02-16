@@ -1,13 +1,14 @@
-package com.example.zihan.grid;
+package com.example.zihan.grid.old;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
+
+import com.example.zihan.grid.R;
 
 import java.util.ArrayList;
 

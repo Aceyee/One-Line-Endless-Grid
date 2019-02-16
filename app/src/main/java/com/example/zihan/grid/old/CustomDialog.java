@@ -1,4 +1,4 @@
-package com.example.zihan.grid;
+package com.example.zihan.grid.old;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.zihan.grid.R;
 
 public class CustomDialog extends Dialog {
 
