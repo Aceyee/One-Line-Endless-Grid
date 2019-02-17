@@ -3,14 +3,11 @@ package com.example.zihan.grid;
 import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.util.Log;
-import android.widget.TextView;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.Random;
 
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -25,7 +22,8 @@ public class MainActivityTest {
     public ActivityTestRule<MainActivity> mainActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     private MainActivity mainActivity = null;
-    private int [] idList = null;
+    private int [] idListMain = null;
+    private int [] idListGame = null;
     private int numOfStressTest = 10;
     private int maxTimesOfClicks = 8;
 
@@ -34,7 +32,7 @@ public class MainActivityTest {
         mainActivity = mainActivityTestRule.getActivity();
 
         /*  a list for all id in the activity_main.xml */
-        idList = new int[]{
+        idListMain = new int[]{
                 R.id.mapPreviewParent,
                 R.id.mapPreview,
                 R.id.btnDifficultyDown,
@@ -43,13 +41,20 @@ public class MainActivityTest {
                 R.id.btnStartGame,
                 R.id.btnTutorial
         };
+
+        idListGame = new int[]{
+                R.id.gameView,
+                R.id.btnReturnMain,
+                R.id.btnHint,
+                R.id.btnRestart
+        };
     }
 
-    @Test
     /* Test if all views exist or not */
-    public void testViewExists(){
+    @Test
+    public void testViewExistInMain(){
         /* Test if all views are present using assertNotNull */
-        for(int id:idList){
+        for(int id:idListMain){
             assertNotNull(mainActivity.findViewById(id));
         }
     }
@@ -60,12 +65,14 @@ public class MainActivityTest {
     @Test
     public void testLevelChange(){
         assertEquals(6, mainActivity.getDifficulty());
+        testLevelChangeDown();
+        testLevelChangeUp();
+        testLevelChangeStress();
     }
 
     /**
      * Test the difficulty value after click levelDown button, should minus 1
      */
-    @Test
     public void testLevelChangeDown() {
         // Click the button
         Espresso.onView(withId(R.id.btnDifficultyDown)).perform(click());
@@ -77,7 +84,6 @@ public class MainActivityTest {
     /**
      * Test the difficulty value after click levelUp button, should plus 1
      */
-    @Test
     public void testLevelChangeUp() {
         // Click the button
         Espresso.onView(withId(R.id.btnDifficultyUp)).perform(click());
@@ -93,7 +99,6 @@ public class MainActivityTest {
      * Need attention that when difficulty == 5 || 12, the corresponding button will be hidden
      * So add constrains || need improvement
      */
-    @Test
     public void testLevelChangeStress() {
         // given a number for stress test
         for(int i=0; i<numOfStressTest; i++){
@@ -111,9 +116,27 @@ public class MainActivityTest {
         }
     }
 
+    /**
+     * Test if content changes after click btnStart
+     */
+    @Test
+    public void testClickBtnStart(){
+        Espresso.onView(withId(R.id.btnStartGame)).perform(click());
+        testViewExistInGame();
+    }
+
+    /**
+     * Test if view exist in activity_game.xml
+     */
+    private void testViewExistInGame() {
+        for(int id:idListGame){
+            assertNotNull(mainActivity.findViewById(id));
+        }
+    }
+
     @After
     public void tearDown() throws Exception {
         mainActivity = null;
-        idList = null;
+        idListMain = null;
     }
 }

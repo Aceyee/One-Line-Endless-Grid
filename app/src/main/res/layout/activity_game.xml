@@ -11,18 +11,19 @@
         android:orientation="vertical"
         android:gravity="center"
         >
-        <com.example.zihan.grid.old.GameView
+        <com.example.zihan.grid.GameView
             android:id="@+id/gameView"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             >
-        </com.example.zihan.grid.old.GameView>
+        </com.example.zihan.grid.GameView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center">
             <ImageButton
+                android:id="@+id/btnReturnMain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="returnMain"
@@ -30,6 +31,7 @@
                 android:src="@mipmap/ic_return"
                 android:background="@color/transparent" />
             <ImageButton
+                android:id="@+id/btnHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="hint"
@@ -38,6 +40,7 @@
                 android:background="@color/transparent" />
 
             <ImageButton
+                android:id="@+id/btnRestart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="restart"

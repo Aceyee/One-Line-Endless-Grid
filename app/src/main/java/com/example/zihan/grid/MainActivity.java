@@ -36,14 +36,13 @@ import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
 public class MainActivity extends AppCompatActivity{
     private int difficulty;
-    private ImageButton btnDifficultyDown;
-    private ImageButton btnDifficultyUp;
-    private TextView tvDifficulty;
+    private ImageButton mBtnDifficultyDown;
+    private ImageButton mBtnDifficultyUp;
+    private TextView mTvDifficulty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         initialize();
     }
 
@@ -51,10 +50,15 @@ public class MainActivity extends AppCompatActivity{
      * Initialize all variables
      */
     private void initialize() {
-        this.btnDifficultyDown = findViewById(R.id.btnDifficultyDown);
-        this.btnDifficultyUp = findViewById(R.id.btnDifficultyUp);
-        this.tvDifficulty = findViewById(R.id.tvDifficulty);
-        this.difficulty = Integer.parseInt(this.tvDifficulty.getText().toString());
+        setContentView(R.layout.activity_main);
+        this.mBtnDifficultyDown = findViewById(R.id.btnDifficultyDown);
+        this.mBtnDifficultyUp = findViewById(R.id.btnDifficultyUp);
+        this.mTvDifficulty = findViewById(R.id.tvDifficulty);
+        this.difficulty = Integer.parseInt(this.mTvDifficulty.getText().toString());
+    }
+
+    public void start(View view) {
+        setContentView(R.layout.activity_game);
     }
 
     /**
@@ -76,25 +80,30 @@ public class MainActivity extends AppCompatActivity{
         updateTvDifficulty();
     }
 
+    /**
+     * Get difficulty
+     * @return
+     */
     public int getDifficulty(){
         return this.difficulty;
     }
+
     /**
      * Update the TextView in the activity_main.xml
      */
     public void updateTvDifficulty(){
         if (this.difficulty == 5) {
-            this.btnDifficultyDown.setEnabled(false);
-            this.btnDifficultyDown.setVisibility(View.INVISIBLE);
+            this.mBtnDifficultyDown.setEnabled(false);
+            this.mBtnDifficultyDown.setVisibility(View.INVISIBLE);
         } else if (this.difficulty == 12) {
-            this.btnDifficultyUp.setEnabled(false);
-            this.btnDifficultyUp.setVisibility(View.INVISIBLE);
+            this.mBtnDifficultyUp.setEnabled(false);
+            this.mBtnDifficultyUp.setVisibility(View.INVISIBLE);
         } else {
-            this.btnDifficultyDown.setEnabled(true);
-            this.btnDifficultyUp.setEnabled(true);
-            this.btnDifficultyDown.setVisibility(View.VISIBLE);
-            this.btnDifficultyUp.setVisibility(View.VISIBLE);
+            this.mBtnDifficultyDown.setEnabled(true);
+            this.mBtnDifficultyUp.setEnabled(true);
+            this.mBtnDifficultyDown.setVisibility(View.VISIBLE);
+            this.mBtnDifficultyUp.setVisibility(View.VISIBLE);
         }
-        this.tvDifficulty.setText(this.difficulty + "");
+        this.mTvDifficulty.setText(this.difficulty + "");
     }
 }
