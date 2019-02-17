@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         width = Integer.parseInt(tvMapWidth.getText().toString());
         btnWidthMinus = (ImageButton) findViewById(R.id.btnDifficultyDown);
         btnWidthPlus = (ImageButton) findViewById(R.id.btnDifficultyUp);
-        gridLayout = findViewById(R.id.mapPreview);
+        gridLayout = findViewById(R.id.puzzlePreview);
         linearLayout =findViewById(R.id.mapPreviewParent);
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) linearLayout.getLayoutParams();
         marginLeft = lp.leftMargin;

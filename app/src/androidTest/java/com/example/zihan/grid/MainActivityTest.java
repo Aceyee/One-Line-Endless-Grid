@@ -34,7 +34,7 @@ public class MainActivityTest {
         /*  a list for all id in the activity_main.xml */
         idListMain = new int[]{
                 R.id.mapPreviewParent,
-                R.id.mapPreview,
+                R.id.puzzlePreview,
                 R.id.btnDifficultyDown,
                 R.id.tvDifficulty,
                 R.id.btnDifficultyUp,

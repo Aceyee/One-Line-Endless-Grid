@@ -35,10 +35,13 @@ import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 //import android.util.Log;
 
 public class MainActivity extends AppCompatActivity{
+    private Context mContext;
+    private LinearLayout linearLayout;
     private int difficulty;
     private ImageButton mBtnDifficultyDown;
     private ImageButton mBtnDifficultyUp;
     private TextView mTvDifficulty;
+    private GridLayout mGridLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +54,14 @@ public class MainActivity extends AppCompatActivity{
      */
     private void initialize() {
         setContentView(R.layout.activity_main);
+        this.mContext = this;
         this.mBtnDifficultyDown = findViewById(R.id.btnDifficultyDown);
         this.mBtnDifficultyUp = findViewById(R.id.btnDifficultyUp);
         this.mTvDifficulty = findViewById(R.id.tvDifficulty);
         this.difficulty = Integer.parseInt(this.mTvDifficulty.getText().toString());
+        this.mGridLayout = findViewById(R.id.puzzlePreview);
+        this.linearLayout =findViewById(R.id.mapPreviewParent);
+        updatePreview();
     }
 
     public void start(View view) {
@@ -105,5 +112,27 @@ public class MainActivity extends AppCompatActivity{
             this.mBtnDifficultyUp.setVisibility(View.VISIBLE);
         }
         this.mTvDifficulty.setText(this.difficulty + "");
+        updatePreview();
+    }
+
+    private void updatePreview(){
+        int width = difficulty;
+        mGridLayout.removeAllViews();
+        mGridLayout.setColumnCount(width);
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < width; j++) {
+                Cell cell = new Cell(mContext, i, j);
+                mGridLayout.addView(cell, GetCellWidth(), GetCellWidth());
+            }
+        }
+    }
+
+    private int GetCellWidth() {
+        DisplayMetrics displayMetrics;
+        displayMetrics = getResources().getDisplayMetrics();
+        int cellWidth;
+//        cellWidth = displayMetrics.widthPixels - marginLeft - marginRight;
+//        return (cellWidth - 10) / width;
+        return 100;
     }
 }
