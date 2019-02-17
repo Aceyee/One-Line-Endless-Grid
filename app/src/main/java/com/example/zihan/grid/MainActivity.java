@@ -4,10 +4,12 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,11 +44,14 @@ public class MainActivity extends AppCompatActivity{
     private ImageButton mBtnDifficultyUp;
     private TextView mTvDifficulty;
     private GridLayout mGridLayout;
+    int marginLeft;
+    int marginRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initialize();
+        updatePreview();
     }
 
     /**
@@ -61,7 +66,9 @@ public class MainActivity extends AppCompatActivity{
         this.difficulty = Integer.parseInt(this.mTvDifficulty.getText().toString());
         this.mGridLayout = findViewById(R.id.puzzlePreview);
         this.linearLayout =findViewById(R.id.mapPreviewParent);
-        updatePreview();
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) linearLayout.getLayoutParams();
+        marginLeft = lp.leftMargin;
+        marginRight = lp.rightMargin;
     }
 
     public void start(View view) {
@@ -130,9 +137,8 @@ public class MainActivity extends AppCompatActivity{
     private int GetCellWidth() {
         DisplayMetrics displayMetrics;
         displayMetrics = getResources().getDisplayMetrics();
-        int cellWidth;
-//        cellWidth = displayMetrics.widthPixels - marginLeft - marginRight;
-//        return (cellWidth - 10) / width;
-        return 100;
+        int cellWidth = displayMetrics.widthPixels - marginLeft - marginRight;
+        int width = difficulty;
+        return (cellWidth - 10) / width;
     }
 }
