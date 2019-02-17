@@ -76,10 +76,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     public void endlessMode() {
         setContentView(R.layout.activity_main);
 
-        tvMapWidth = (TextView) findViewById(R.id.mapWidth);
+        tvMapWidth = (TextView) findViewById(R.id.tvDifficulty);
         width = Integer.parseInt(tvMapWidth.getText().toString());
-        btnWidthMinus = (ImageButton) findViewById(R.id.btnWidthMinus);
-        btnWidthPlus = (ImageButton) findViewById(R.id.btnWidthPlus);
+        btnWidthMinus = (ImageButton) findViewById(R.id.btnDifficultyDown);
+        btnWidthPlus = (ImageButton) findViewById(R.id.btnDifficultyUp);
         gridLayout = findViewById(R.id.mapPreview);
         linearLayout =findViewById(R.id.mapPreviewParent);
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) linearLayout.getLayoutParams();
@@ -388,4 +388,6 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     public void onRewardedVideoCompleted() {
 //        Toast.makeText(this, "onRewardedVideoCompleted", Toast.LENGTH_SHORT).show();
     }
+
+
 }
