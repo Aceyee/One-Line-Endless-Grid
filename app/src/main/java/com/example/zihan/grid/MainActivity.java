@@ -1,45 +1,24 @@
 package com.example.zihan.grid;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Path;
-import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.view.Display;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewStub;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.example.zihan.grid.old.Cell;
-import com.example.zihan.grid.old.CustomDialog;
-import com.example.zihan.grid.old.GameView;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.reward.RewardItem;
-import com.google.android.gms.ads.reward.RewardedVideoAd;
-import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
 //import android.util.Log;
 
 public class MainActivity extends AppCompatActivity{
     private Context mContext;
     private LinearLayout linearLayout;
-    private int difficulty;
+    private static int difficulty;
+    private static int previewCellWidth;
+    private static int cellWidth;
     private ImageButton mBtnDifficultyDown;
     private ImageButton mBtnDifficultyUp;
     private TextView mTvDifficulty;
@@ -62,13 +41,14 @@ public class MainActivity extends AppCompatActivity{
         this.mContext = this;
         this.mBtnDifficultyDown = findViewById(R.id.btnDifficultyDown);
         this.mBtnDifficultyUp = findViewById(R.id.btnDifficultyUp);
-        this.mTvDifficulty = findViewById(R.id.tvDifficulty);
-        this.difficulty = Integer.parseInt(this.mTvDifficulty.getText().toString());
         this.mGridLayout = findViewById(R.id.puzzlePreview);
         this.linearLayout =findViewById(R.id.mapPreviewParent);
+        this.mTvDifficulty = findViewById(R.id.tvDifficulty);
+        difficulty = Integer.parseInt(this.mTvDifficulty.getText().toString());
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) linearLayout.getLayoutParams();
         marginLeft = lp.leftMargin;
         marginRight = lp.rightMargin;
+        calcCellWidth();
     }
 
     public void start(View view) {
@@ -80,7 +60,7 @@ public class MainActivity extends AppCompatActivity{
      * @param view
      */
     public void decreaseDifficulty(View view) {
-        this.difficulty--;
+        difficulty--;
         updateTvDifficulty();
     }
 
@@ -89,8 +69,7 @@ public class MainActivity extends AppCompatActivity{
      * @param view
      */
     public void increaseDifficulty(View view) {
-//        System.out.println(view);
-        this.difficulty++;
+        difficulty++;
         updateTvDifficulty();
     }
 
@@ -98,18 +77,18 @@ public class MainActivity extends AppCompatActivity{
      * Get difficulty
      * @return
      */
-    public int getDifficulty(){
-        return this.difficulty;
+    public static int getDifficulty(){
+        return difficulty;
     }
 
     /**
      * Update the TextView in the activity_main.xml
      */
     public void updateTvDifficulty(){
-        if (this.difficulty == 5) {
+        if (difficulty == 5) {
             this.mBtnDifficultyDown.setEnabled(false);
             this.mBtnDifficultyDown.setVisibility(View.INVISIBLE);
-        } else if (this.difficulty == 12) {
+        } else if (difficulty == 12) {
             this.mBtnDifficultyUp.setEnabled(false);
             this.mBtnDifficultyUp.setVisibility(View.INVISIBLE);
         } else {
@@ -118,10 +97,14 @@ public class MainActivity extends AppCompatActivity{
             this.mBtnDifficultyDown.setVisibility(View.VISIBLE);
             this.mBtnDifficultyUp.setVisibility(View.VISIBLE);
         }
-        this.mTvDifficulty.setText(this.difficulty + "");
+        this.mTvDifficulty.setText(difficulty + "");
+        calcCellWidth();
         updatePreview();
     }
 
+    /**
+     * Change the grid puzzle when clicked btnDifficultyUp and btnDifficultyDown
+     */
     private void updatePreview(){
         int width = difficulty;
         mGridLayout.removeAllViews();
@@ -129,16 +112,28 @@ public class MainActivity extends AppCompatActivity{
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < width; j++) {
                 Cell cell = new Cell(mContext, i, j);
-                mGridLayout.addView(cell, GetCellWidth(), GetCellWidth());
+                mGridLayout.addView(cell, previewCellWidth, previewCellWidth);
             }
         }
     }
 
-    private int GetCellWidth() {
+    /**
+     * Dynamically calculate cell with in pixel
+     * Two scenarios:
+     * - preview grid
+     * - game grid
+     */
+    private void calcCellWidth() {
         DisplayMetrics displayMetrics;
         displayMetrics = getResources().getDisplayMetrics();
-        int cellWidth = displayMetrics.widthPixels - marginLeft - marginRight;
-        int width = difficulty;
-        return (cellWidth - 10) / width;
+        int preViewGridWidth = displayMetrics.widthPixels - marginLeft - marginRight;
+        int gridWidth = displayMetrics.widthPixels;
+        int size = difficulty;
+        cellWidth = (gridWidth-10) / size;
+        previewCellWidth = (preViewGridWidth - 10) / size;
+    }
+
+    public static int getCellWidth(){
+        return cellWidth;
     }
 }

@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 
+import com.example.zihan.grid.Cell;
+import com.example.zihan.grid.Node;
 import com.example.zihan.grid.R;
 
 import java.util.ArrayList;
 
 public class GameView extends FrameLayout{
-    Cell [][] cells;
+    Cell[][] cells;
     boolean[][] hintCells;
     Cell startCell;
     private CustomDialog.Builder builder;

@@ -13,6 +13,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.example.zihan.grid.MainActivity.getDifficulty;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
@@ -22,6 +23,7 @@ public class MainActivityTest {
     public ActivityTestRule<MainActivity> mainActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     private MainActivity mainActivity = null;
+    private GameView mGameView;
     private int [] idListMain = null;
     private int [] idListGame = null;
     private int numOfStressTest = 10;
@@ -64,7 +66,7 @@ public class MainActivityTest {
      */
     @Test
     public void testLevelChange(){
-        assertEquals(6, mainActivity.getDifficulty());
+        assertEquals(6, getDifficulty());
         testLevelChangeDown();
         testLevelChangeUp();
         testLevelChangeStress();
@@ -73,23 +75,23 @@ public class MainActivityTest {
     /**
      * Test the difficulty value after click levelDown button, should minus 1
      */
-    public void testLevelChangeDown() {
+    private void testLevelChangeDown() {
         // Click the button
         Espresso.onView(withId(R.id.btnDifficultyDown)).perform(click());
 
         // Check if value matches
-        Espresso.onView(withId(R.id.tvDifficulty)).check(matches(withText(mainActivity.getDifficulty()+"")));
+        Espresso.onView(withId(R.id.tvDifficulty)).check(matches(withText(getDifficulty()+"")));
     }
 
     /**
      * Test the difficulty value after click levelUp button, should plus 1
      */
-    public void testLevelChangeUp() {
+    private void testLevelChangeUp() {
         // Click the button
         Espresso.onView(withId(R.id.btnDifficultyUp)).perform(click());
 
         // Check if value matches
-        Espresso.onView(withId(R.id.tvDifficulty)).check(matches(withText(mainActivity.getDifficulty()+"")));
+        Espresso.onView(withId(R.id.tvDifficulty)).check(matches(withText(getDifficulty()+"")));
     }
 
     /**
@@ -99,19 +101,19 @@ public class MainActivityTest {
      * Need attention that when difficulty == 5 || 12, the corresponding button will be hidden
      * So add constrains || need improvement
      */
-    public void testLevelChangeStress() {
+    private void testLevelChangeStress() {
         // given a number for stress test
         for(int i=0; i<numOfStressTest; i++){
             int clicks = (int) (Math.random()*maxTimesOfClicks);
             for(int j=0; j<clicks; j++){
                 int clickUpOrDown = (int) Math.round(Math.random());
-                if(clickUpOrDown==0 && mainActivity.getDifficulty()<12){
+                if(clickUpOrDown==0 && getDifficulty()<12){
                     Espresso.onView(withId(R.id.btnDifficultyUp)).perform(click());
-                }else if(clickUpOrDown==1 && mainActivity.getDifficulty()>5){
+                }else if(clickUpOrDown==1 && getDifficulty()>5){
                     Espresso.onView(withId(R.id.btnDifficultyDown)).perform(click());
                 }
             }
-            Espresso.onView(withId(R.id.tvDifficulty)).check(matches(withText(mainActivity.getDifficulty()+"")));
+            Espresso.onView(withId(R.id.tvDifficulty)).check(matches(withText(getDifficulty()+"")));
 //            Log.d("times", i+"");
         }
     }
@@ -120,9 +122,14 @@ public class MainActivityTest {
      * Test if content changes after click btnStart
      */
     @Test
+    public void testGame(){
+        testClickBtnStart();
+        testViewExistInGame();
+        testGameView();
+    }
+
     public void testClickBtnStart(){
         Espresso.onView(withId(R.id.btnStartGame)).perform(click());
-        testViewExistInGame();
     }
 
     /**
@@ -132,6 +139,11 @@ public class MainActivityTest {
         for(int id:idListGame){
             assertNotNull(mainActivity.findViewById(id));
         }
+    }
+
+    private void testGameView() {
+        mGameView = mainActivity.findViewById(R.id.gameView);
+        assertEquals(getDifficulty(), mGameView.getDifficulty());
     }
 
     @After

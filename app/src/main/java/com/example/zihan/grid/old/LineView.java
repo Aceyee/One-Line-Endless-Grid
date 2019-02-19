@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.example.zihan.grid.Cell;
+
 import java.util.ArrayList;
 
 public class LineView extends View{

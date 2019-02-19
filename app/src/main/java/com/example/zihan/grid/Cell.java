@@ -1,11 +1,9 @@
-package com.example.zihan.grid.old;
+package com.example.zihan.grid;
 
 import android.content.Context;
 //import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
-
-import com.example.zihan.grid.R;
 
 public class Cell extends FrameLayout {
     String TAG="Cell";

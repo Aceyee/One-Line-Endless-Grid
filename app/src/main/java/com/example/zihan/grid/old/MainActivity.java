@@ -23,6 +23,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.zihan.grid.Cell;
 import com.example.zihan.grid.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;

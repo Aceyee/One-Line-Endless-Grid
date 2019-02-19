@@ -3,12 +3,15 @@ package com.example.zihan.grid.old;
 import android.content.Context;
 //import android.util.Log;
 
+import com.example.zihan.grid.Cell;
+import com.example.zihan.grid.Node;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class GridGenerator {
     private String TAG="";
-    public Cell [][] grid;
+    public Cell[][] grid;
     public int [][] map;
     public Cell start;
     public int width;
