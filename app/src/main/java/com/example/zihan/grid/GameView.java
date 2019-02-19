@@ -14,6 +14,9 @@ public class GameView extends FrameLayout {
     private Context mContext;
     private int difficulty;
     private int cellWidth;
+    private boolean isTutorial;
+    private int size;
+    private GridGenerator gg;
 
     public GameView(@NonNull Context context) {
         super(context);
@@ -37,11 +40,9 @@ public class GameView extends FrameLayout {
     private void initialize(Context context) {
         this.mContext = context;
         this.cellWidth = MainActivity.getCellWidth();
+        this.isTutorial = MainActivity.getIsTutorial();
         this.difficulty = MainActivity.getDifficulty();
-        int size = this.difficulty;
-        this.cells = new Cell[size][size];
         this.mGridLayout = new GridLayout(context);
-        this.mGridLayout.setColumnCount(size);
         setBackgroundGrid();
         startGame();
     }
@@ -61,10 +62,30 @@ public class GameView extends FrameLayout {
             mGridLayout.removeAllViews();
             this.removeAllViews();
         }
-        int size = this.difficulty;
+        checkIsTutorial();
+        addCellsToView();
+    }
+
+    private void checkIsTutorial() {
+        if(isTutorial){
+            this.difficulty = 3;
+            this.size = this.difficulty;
+            this.cells = new Cell[size][size];
+            this.mGridLayout.setColumnCount(size);
+            gg = new GridGenerator(getContext());
+            isTutorial=false;
+        }else {
+            this.size = this.difficulty;
+            this.cells = new Cell[size][size];
+            this.mGridLayout.setColumnCount(size);
+            gg = new GridGenerator(getContext(), size, size);
+        }
+    }
+
+    private void addCellsToView() {
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
-                this.cells[i][j] = new Cell(mContext);
+                this.cells[i][j] = new Cell(mContext, gg.grid[i][j]);
             }
         }
         for(int i=0; i<cells.length; i++){
@@ -72,6 +93,7 @@ public class GameView extends FrameLayout {
                 mGridLayout.addView(cells[i][j], this.cellWidth, this.cellWidth);
             }
         }
+
         addView(mGridLayout);
     }
 }

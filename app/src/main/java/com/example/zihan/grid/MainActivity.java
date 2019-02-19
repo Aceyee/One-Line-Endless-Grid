@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity{
     private ImageButton mBtnDifficultyUp;
     private TextView mTvDifficulty;
     private GridLayout mGridLayout;
+    private static boolean isTutorial;
     int marginLeft;
     int marginRight;
 
@@ -51,8 +52,13 @@ public class MainActivity extends AppCompatActivity{
         calcCellWidth();
     }
 
-    public void start(View view) {
+    public void startGame(View view) {
         setContentView(R.layout.activity_game);
+    }
+
+    public void startTutorial(View view) {
+        isTutorial = true;
+        setContentView(R.layout.activity_tutorial);
     }
 
     /**
@@ -135,5 +141,9 @@ public class MainActivity extends AppCompatActivity{
 
     public static int getCellWidth(){
         return cellWidth;
+    }
+
+    public static boolean getIsTutorial(){
+        return isTutorial;
     }
 }

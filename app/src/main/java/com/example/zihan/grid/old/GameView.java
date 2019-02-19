@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.GridLayout;
 
 import com.example.zihan.grid.Cell;
+import com.example.zihan.grid.GridGenerator;
 import com.example.zihan.grid.Node;
 import com.example.zihan.grid.R;
 

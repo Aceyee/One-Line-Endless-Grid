@@ -1,10 +1,7 @@
-package com.example.zihan.grid.old;
+package com.example.zihan.grid;
 
 import android.content.Context;
 //import android.util.Log;
-
-import com.example.zihan.grid.Cell;
-import com.example.zihan.grid.Node;
 
 import java.util.ArrayList;
 import java.util.Random;

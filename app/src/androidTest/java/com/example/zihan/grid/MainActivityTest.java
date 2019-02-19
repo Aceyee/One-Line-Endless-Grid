@@ -26,6 +26,7 @@ public class MainActivityTest {
     private GameView mGameView;
     private int [] idListMain = null;
     private int [] idListGame = null;
+    private int [] idListTutorial = null;
     private int numOfStressTest = 10;
     private int maxTimesOfClicks = 8;
 
@@ -49,6 +50,12 @@ public class MainActivityTest {
                 R.id.btnReturnMain,
                 R.id.btnHint,
                 R.id.btnRestart
+        };
+
+        idListTutorial = new int[]{
+                R.id.tutorialGameView,
+                R.id.btnReturnMain,
+                R.id.guide_root_slide,
         };
     }
 
@@ -144,6 +151,28 @@ public class MainActivityTest {
     private void testGameView() {
         mGameView = mainActivity.findViewById(R.id.gameView);
         assertEquals(getDifficulty(), mGameView.getDifficulty());
+    }
+
+    @Test
+    public void testTutorial(){
+        testClickBtnTutorial();
+        testViewExistInTutorial();
+        testGameViewTutorial();
+    }
+
+    private void testClickBtnTutorial() {
+        Espresso.onView(withId(R.id.btnTutorial)).perform(click());
+    }
+
+    private void testViewExistInTutorial() {
+        for(int id:idListTutorial){
+            assertNotNull(mainActivity.findViewById(id));
+        }
+    }
+
+    private void testGameViewTutorial() {
+        mGameView = mainActivity.findViewById(R.id.tutorialGameView);
+        assertEquals(3, mGameView.getDifficulty());
     }
 
     @After
