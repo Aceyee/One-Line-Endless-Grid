@@ -1,6 +1,7 @@
 # One Line : Endless Grid
 
-This is a brain game. Just swipe your finger to beat all levels!
+This is an intelligence game with INFINITY levels.
+Just swipe your finger to beat all levels!
 
 ![Alt Text](https://github.com/Aceyee/Grid/blob/master/app/src/main/psd/demo2.gif)
 
