@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         endlessMode();
     }
     private void loadRewardedVideoAd() {
-        MobileAds.initialize(this, "ca-app-pub-6463832285749725~6032085069");// My ID
+        MobileAds.initialize(this, "ca-app-pub-6463832285749725~6032085069");// My Personal ID
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
         mRewardedVideoAd.setRewardedVideoAdListener(this);
 
@@ -77,11 +77,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     public void endlessMode() {
         setContentView(R.layout.activity_main);
         mcontext = this;
-
-        tvMapWidth = (TextView) findViewById(R.id.mapWidth);
+        tvMapWidth = findViewById(R.id.mapWidth);
         width = Integer.parseInt(tvMapWidth.getText().toString());
-        btnWidthMinus = (ImageButton) findViewById(R.id.btnWidthMinus);
-        btnWidthPlus = (ImageButton) findViewById(R.id.btnWidthPlus);
+        btnWidthMinus = findViewById(R.id.btnWidthMinus);
+        btnWidthPlus = findViewById(R.id.btnWidthPlus);
         gridLayout = findViewById(R.id.mapPreview);
         linearLayout =findViewById(R.id.mapPreviewParent);
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) linearLayout.getLayoutParams();
@@ -119,13 +118,21 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         getWindow().setAttributes(lp);
     }
 
+    public void start(View view) {
+        setContentView(R.layout.activity_game);
+        gameView = findViewById(R.id.gameView);
+        loadBannerAd();
+        DialogPlayRewardAd();
+        DialogLevelClear();
+    }
+
     private void loadBannerAd(){
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
 
-    public void addListener(){
+    public void DialogPlayRewardAd(){
         adBuilder = new CustomDialog.Builder(this);
         adShowTwoButtonDialog(getResources().getString(R.string.watchAd),
                 getResources().getString(R.string.yes),
@@ -149,12 +156,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                 });
     }
 
-    public void start(View view) {
-        setContentView(R.layout.activity_game);
-        gameView = findViewById(R.id.gameView);
-        loadBannerAd();
-        addListener();
-
+    private void DialogLevelClear() {
         builder = new CustomDialog.Builder(this);
         showTwoButtonDialog(
                 getResources().getString(R.string.levelClear),
@@ -177,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                         endlessMode();
                         mDialog.dismiss();
                     }
-                 }
+                }
         );
     }
 
@@ -198,6 +200,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             btnWidthMinus.setVisibility(View.VISIBLE);
             btnWidthPlus.setVisibility(View.VISIBLE);
         }
+        updateView();
+    }
+
+    private void updateView() {
         gridLayout.removeAllViews();
         gridLayout.setColumnCount(width);
         for (int i = 0; i < width; i++) {
@@ -249,24 +255,24 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
     public void returnMain(View view) {
         builder = new CustomDialog.Builder(this);
-        showTwoButtonDialog( getResources().getString(R.string.returnMain)+"?",
+        showTwoButtonDialog(
+                getResources().getString(R.string.returnMain)+"?",
                 getResources().getString(R.string.yes),
                 getResources().getString(R.string.no),
                 new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDialog.dismiss();
-                setContentView(R.layout.activity_main);
-                endlessMode();
-                //这里写自定义处理XXX
-            }
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDialog.dismiss();
-                //这里写自定义处理XXX
-            }
-        });
+                    @Override
+                    public void onClick(View v) {
+                        mDialog.dismiss();
+                        setContentView(R.layout.activity_main);
+                        endlessMode();
+                    }},
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mDialog.dismiss();
+                    }
+                }
+        );
         mDialog.show();
     }
     private void showTwoButtonDialog(String alertText, String confirmText, String cancelText, View.OnClickListener conFirmListener, View.OnClickListener cancelListener) {
