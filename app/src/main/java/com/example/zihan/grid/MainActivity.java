@@ -61,16 +61,14 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mcontext = this;
-
-        MobileAds.initialize(this, "ca-app-pub-6463832285749725~6032085069");// My ID
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
-        mRewardedVideoAd.setRewardedVideoAdListener(this);
         loadRewardedVideoAd();
-
         endlessMode();
     }
     private void loadRewardedVideoAd() {
+        MobileAds.initialize(this, "ca-app-pub-6463832285749725~6032085069");// My ID
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+        mRewardedVideoAd.setRewardedVideoAdListener(this);
+
 //        mRewardedVideoAd.loadAd("ca-app-pub-6463832285749725/4575101960",//My ID
 //                new AdRequest.Builder().build());
         mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",//Test ID
@@ -78,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     }
     public void endlessMode() {
         setContentView(R.layout.activity_main);
+        mcontext = this;
 
         tvMapWidth = (TextView) findViewById(R.id.mapWidth);
         width = Integer.parseInt(tvMapWidth.getText().toString());
@@ -120,14 +119,13 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         getWindow().setAttributes(lp);
     }
 
-    public void start(View view) {
-        setContentView(R.layout.activity_game);
-
+    private void loadBannerAd(){
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-        gameView = findViewById(R.id.gameView);
+    }
 
+    public void addListener(){
         adBuilder = new CustomDialog.Builder(this);
         adShowTwoButtonDialog(getResources().getString(R.string.watchAd),
                 getResources().getString(R.string.yes),
@@ -149,28 +147,38 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                         adDialog.dismiss();
                     }
                 });
+    }
+
+    public void start(View view) {
+        setContentView(R.layout.activity_game);
+        gameView = findViewById(R.id.gameView);
+        loadBannerAd();
+        addListener();
 
         builder = new CustomDialog.Builder(this);
-        showTwoButtonDialog(getResources().getString(R.string.levelClear),
+        showTwoButtonDialog(
+                getResources().getString(R.string.levelClear),
                 getResources().getString(R.string.nextLevel),
                 getResources().getString(R.string.backMain),
                 new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gameView.startGame();
-                if(numOfHint<8){
-                    numOfHint++;
-                }
-                mDialog.dismiss();
-            }
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setContentView(R.layout.activity_main);
-                endlessMode();
-                mDialog.dismiss();
-            }
-        });
+                    @Override
+                    public void onClick(View v) {
+                        gameView.startGame();
+                        if(numOfHint<8){
+                            numOfHint++;
+                        }
+                        mDialog.dismiss();
+                    }
+                },
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setContentView(R.layout.activity_main);
+                        endlessMode();
+                        mDialog.dismiss();
+                    }
+                 }
+        );
     }
 
     public static int getWidth() {
@@ -180,11 +188,15 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     private void setTvMapWidth() {
         if (width == 5) {
             btnWidthMinus.setEnabled(false);
+            btnWidthMinus.setVisibility(View.INVISIBLE);
         } else if (width == 12) {
             btnWidthPlus.setEnabled(false);
+            btnWidthPlus.setVisibility(View.INVISIBLE);
         } else {
             btnWidthMinus.setEnabled(true);
             btnWidthPlus.setEnabled(true);
+            btnWidthMinus.setVisibility(View.VISIBLE);
+            btnWidthPlus.setVisibility(View.VISIBLE);
         }
         gridLayout.removeAllViews();
         gridLayout.setColumnCount(width);
