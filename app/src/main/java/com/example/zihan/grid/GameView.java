@@ -15,7 +15,6 @@ public class GameView extends FrameLayout {
     private int difficulty;
     private int cellWidth;
     private boolean isTutorial;
-    private int size;
     private GridGenerator gg;
 
     public GameView(@NonNull Context context) {
@@ -67,22 +66,22 @@ public class GameView extends FrameLayout {
     }
 
     private void checkIsTutorial() {
+        int size;
         if(isTutorial){
             this.difficulty = 3;
-            this.size = this.difficulty;
-            this.cells = new Cell[size][size];
-            this.mGridLayout.setColumnCount(size);
+            size = this.difficulty;
             gg = new GridGenerator(getContext());
             isTutorial=false;
         }else {
-            this.size = this.difficulty;
-            this.cells = new Cell[size][size];
-            this.mGridLayout.setColumnCount(size);
+            size = this.difficulty;
             gg = new GridGenerator(getContext(), size, size);
         }
+        this.cells = new Cell[size][size];
+        this.mGridLayout.setColumnCount(size);
     }
 
     private void addCellsToView() {
+        int size = this.difficulty;
         for(int i=0; i<size; i++){
             for(int j=0; j<size; j++){
                 this.cells[i][j] = new Cell(mContext, gg.grid[i][j]);

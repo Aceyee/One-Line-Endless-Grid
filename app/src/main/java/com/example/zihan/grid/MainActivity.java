@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initialize();
-        updatePreview();
     }
 
     /**
@@ -50,6 +49,7 @@ public class MainActivity extends AppCompatActivity{
         marginLeft = lp.leftMargin;
         marginRight = lp.rightMargin;
         calcCellWidth();
+        updatePreview();
     }
 
     public void startGame(View view) {
@@ -145,5 +145,9 @@ public class MainActivity extends AppCompatActivity{
 
     public static boolean getIsTutorial(){
         return isTutorial;
+    }
+
+    public void returnMain(View view) {
+        initialize();
     }
 }
