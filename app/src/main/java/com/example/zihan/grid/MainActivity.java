@@ -57,11 +57,12 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     private AdView mAdView;
     private RewardedVideoAd mRewardedVideoAd;
     private int numOfHint=6;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadRewardedVideoAd();
-        endlessMode();
+        enterMain();
     }
     private void loadRewardedVideoAd() {
         MobileAds.initialize(this, "ca-app-pub-6463832285749725~6032085069");// My Personal ID
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",//Test ID
                         new AdRequest.Builder().build());
     }
-    public void endlessMode() {
+    public void enterMain() {
         setContentView(R.layout.activity_main);
         mcontext = this;
         tvMapWidth = findViewById(R.id.mapWidth);
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         getWindow().setAttributes(lp);
     }
 
-    public void start(View view) {
+    public void startGame(View view) {
         setContentView(R.layout.activity_game);
         gameView = findViewById(R.id.gameView);
         loadBannerAd();
@@ -175,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                     @Override
                     public void onClick(View v) {
                         setContentView(R.layout.activity_main);
-                        endlessMode();
+                        enterMain();
                         mDialog.dismiss();
                     }
                 }
@@ -263,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                     public void onClick(View v) {
                         mDialog.dismiss();
                         setContentView(R.layout.activity_main);
-                        endlessMode();
+                        enterMain();
                     }},
                 new View.OnClickListener() {
                     @Override
@@ -288,7 +289,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                 .createTwoButtonDialog();
     }
 
-    public void tutorial(View view) {
+    public void startTutorial(View view) {
         width=3;
         setContentView(R.layout.activity_tutorial);
         stubGuideSlide = findViewById(R.id.guide_root_slide);
@@ -303,15 +304,13 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             public void onClick(View v) {
                 tutorialGameView.startGame();
                 mDialog.dismiss();
-                //这里写自定义处理XXX
             }
         }, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setContentView(R.layout.activity_main);
-                endlessMode();
+                enterMain();
                 mDialog.dismiss();
-                //这里写自定义处理XXX
             }
         });
 
