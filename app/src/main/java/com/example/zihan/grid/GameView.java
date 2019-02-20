@@ -3,7 +3,6 @@ package com.example.zihan.grid;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -33,8 +32,6 @@ public class GameView extends FrameLayout{
     public ArrayList<Node> track;
     public int hintCount=0;
     private boolean isTutorial=false;
-    private boolean readyToRemove=false;
-
 
     GridGenerator gg;
     LineView lineView;
@@ -65,9 +62,9 @@ public class GameView extends FrameLayout{
             isTutorial=true;
         }
         if(attrs==null) {
-//            cellColor = 0xffeee4da;
-//            defaultColor = 0xffbbadc0;
-//            selectedColor = 0xffccc4da;
+            cellColor = 0xffeee4da;
+            defaultColor = 0xffbbadc0;
+            selectedColor = 0xffccc4da;
         }else{
             //Log.d(TAG, "initGame: "+attrs.getAttributeResourceValue());
             cellColor = getResources().getColor(R.color.cellColor);
@@ -243,9 +240,9 @@ public class GameView extends FrameLayout{
         }
         this.startCell = gg.start;
         gridLayout.setColumnCount(numCols);
-        for(int i=0; i<cells.length; i++){
-            for(int j=0; j<cells[0].length; j++){
-                gridLayout.addView(cells[i][j], GetCellWidth(), GetCellWidth());
+        for (Cell[] cell : cells) {
+            for (int j = 0; j < cells[0].length; j++) {
+                gridLayout.addView(cell[j], GetCellWidth(), GetCellWidth());
             }
         }
         stack=new ArrayList<>();
@@ -282,9 +279,9 @@ public class GameView extends FrameLayout{
                 this.cells[i][j] = new Cell(context, gg.grid[i][j]);
             }
         }
-        for(int i=0; i<cells.length; i++){
-            for(int j=0; j<cells[0].length; j++){
-                gridLayout.addView(cells[i][j], GetCellWidth(), GetCellWidth());
+        for (Cell[] cell : cells) {
+            for (int j = 0; j < cells[0].length; j++) {
+                gridLayout.addView(cell[j], GetCellWidth(), GetCellWidth());
             }
         }
 

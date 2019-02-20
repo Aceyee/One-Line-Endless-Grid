@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     private Context mcontext;
     private ImageButton btnWidthMinus;
     private ImageButton btnWidthPlus;
-    private ImageButton btnPause;
     private int marginLeft;
     private int marginRight;
 
@@ -58,31 +57,30 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     private AdView mAdView;
     private RewardedVideoAd mRewardedVideoAd;
     private int numOfHint=6;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mcontext = this;
-
-        MobileAds.initialize(this, "ca-app-pub-6463832285749725~6032085069");// My ID
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
-        mRewardedVideoAd.setRewardedVideoAdListener(this);
         loadRewardedVideoAd();
-
-        endlessMode();
+        enterMain();
     }
     private void loadRewardedVideoAd() {
-        mRewardedVideoAd.loadAd("ca-app-pub-6463832285749725/4575101960",//My ID
-                new AdRequest.Builder().build());
-        //mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",//Test ID
-        //                new AdRequest.Builder().build());
-    }
-    public void endlessMode() {
-        setContentView(R.layout.activity_main);
+        MobileAds.initialize(this, "ca-app-pub-6463832285749725~6032085069");// My Personal ID
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+        mRewardedVideoAd.setRewardedVideoAdListener(this);
 
-        tvMapWidth = (TextView) findViewById(R.id.mapWidth);
+//        mRewardedVideoAd.loadAd("ca-app-pub-6463832285749725/4575101960",//My ID
+//                new AdRequest.Builder().build());
+        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",//Test ID
+                        new AdRequest.Builder().build());
+    }
+    public void enterMain() {
+        setContentView(R.layout.activity_main);
+        mcontext = this;
+        tvMapWidth = findViewById(R.id.mapWidth);
         width = Integer.parseInt(tvMapWidth.getText().toString());
-        btnWidthMinus = (ImageButton) findViewById(R.id.btnWidthMinus);
-        btnWidthPlus = (ImageButton) findViewById(R.id.btnWidthPlus);
+        btnWidthMinus = findViewById(R.id.btnWidthMinus);
+        btnWidthPlus = findViewById(R.id.btnWidthPlus);
         gridLayout = findViewById(R.id.mapPreview);
         linearLayout =findViewById(R.id.mapPreviewParent);
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) linearLayout.getLayoutParams();
@@ -120,18 +118,21 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         getWindow().setAttributes(lp);
     }
 
-    public void Next(View view) {
-        gameView.startGame();
+    public void startGame(View view) {
+        setContentView(R.layout.activity_game);
+        gameView = findViewById(R.id.gameView);
+        loadBannerAd();
+        DialogPlayRewardAd();
+        DialogLevelClear();
     }
 
-    public void start(View view) {
-        setContentView(R.layout.activity_game);
-
+    private void loadBannerAd(){
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-        gameView = findViewById(R.id.gameView);
+    }
 
+    public void DialogPlayRewardAd(){
         adBuilder = new CustomDialog.Builder(this);
         adShowTwoButtonDialog(getResources().getString(R.string.watchAd),
                 getResources().getString(R.string.yes),
@@ -153,36 +154,33 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                         adDialog.dismiss();
                     }
                 });
+    }
 
+    private void DialogLevelClear() {
         builder = new CustomDialog.Builder(this);
-        showTwoButtonDialog(getResources().getString(R.string.levelClear),
+        showTwoButtonDialog(
+                getResources().getString(R.string.levelClear),
                 getResources().getString(R.string.nextLevel),
                 getResources().getString(R.string.backMain),
                 new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gameView.startGame();
-                if(numOfHint<8){
-                    numOfHint++;
+                    @Override
+                    public void onClick(View v) {
+                        gameView.startGame();
+                        if(numOfHint<8){
+                            numOfHint++;
+                        }
+                        mDialog.dismiss();
+                    }
+                },
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setContentView(R.layout.activity_main);
+                        enterMain();
+                        mDialog.dismiss();
+                    }
                 }
-                mDialog.dismiss();
-            }
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setContentView(R.layout.activity_main);
-                endlessMode();
-                mDialog.dismiss();
-            }
-        });
-        /*
-        btnPause = (ImageButton) findViewById(R.id.btnPause);
-        btnPause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //showpopupWindow(v);// 显示PopupWindow
-            }
-        });*/
+        );
     }
 
     public static int getWidth() {
@@ -192,12 +190,20 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     private void setTvMapWidth() {
         if (width == 5) {
             btnWidthMinus.setEnabled(false);
+            btnWidthMinus.setVisibility(View.INVISIBLE);
         } else if (width == 12) {
             btnWidthPlus.setEnabled(false);
+            btnWidthPlus.setVisibility(View.INVISIBLE);
         } else {
             btnWidthMinus.setEnabled(true);
             btnWidthPlus.setEnabled(true);
+            btnWidthMinus.setVisibility(View.VISIBLE);
+            btnWidthPlus.setVisibility(View.VISIBLE);
         }
+        updateView();
+    }
+
+    private void updateView() {
         gridLayout.removeAllViews();
         gridLayout.setColumnCount(width);
         for (int i = 0; i < width; i++) {
@@ -249,24 +255,24 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
     public void returnMain(View view) {
         builder = new CustomDialog.Builder(this);
-        showTwoButtonDialog( getResources().getString(R.string.returnMain)+"?",
+        showTwoButtonDialog(
+                getResources().getString(R.string.returnMain)+"?",
                 getResources().getString(R.string.yes),
                 getResources().getString(R.string.no),
                 new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDialog.dismiss();
-                setContentView(R.layout.activity_main);
-                endlessMode();
-                //这里写自定义处理XXX
-            }
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDialog.dismiss();
-                //这里写自定义处理XXX
-            }
-        });
+                    @Override
+                    public void onClick(View v) {
+                        mDialog.dismiss();
+                        setContentView(R.layout.activity_main);
+                        enterMain();
+                    }},
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mDialog.dismiss();
+                    }
+                }
+        );
         mDialog.show();
     }
     private void showTwoButtonDialog(String alertText, String confirmText, String cancelText, View.OnClickListener conFirmListener, View.OnClickListener cancelListener) {
@@ -283,11 +289,11 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                 .createTwoButtonDialog();
     }
 
-    public void tutorial(View view) {
+    public void startTutorial(View view) {
         width=3;
         setContentView(R.layout.activity_tutorial);
-        stubGuideSlide = (ViewStub) findViewById(R.id.guide_root_slide);
-        tutorialGameView=(GameView)findViewById(R.id.tutorialGameView);
+        stubGuideSlide = findViewById(R.id.guide_root_slide);
+        tutorialGameView = findViewById(R.id.tutorialGameView);
 
         builder = new CustomDialog.Builder(this);
         showTwoButtonDialog( getResources().getString(R.string.levelClear),
@@ -298,23 +304,21 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             public void onClick(View v) {
                 tutorialGameView.startGame();
                 mDialog.dismiss();
-                //这里写自定义处理XXX
             }
         }, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setContentView(R.layout.activity_main);
-                endlessMode();
+                enterMain();
                 mDialog.dismiss();
-                //这里写自定义处理XXX
             }
         });
 
         try {
             final View guideSlideView = stubGuideSlide.inflate();
-            RelativeLayout rl = (RelativeLayout) guideSlideView.findViewById(R.id.guide_root);
+            RelativeLayout rl =  guideSlideView.findViewById(R.id.guide_root);
 
-            finger=(ImageView)findViewById(R.id.ivFinger);
+            finger = findViewById(R.id.ivFinger);
             if (rl != null) {
                 rl.setOnClickListener(new View.OnClickListener() {
                     @Override
