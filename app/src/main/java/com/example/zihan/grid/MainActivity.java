@@ -71,10 +71,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         endlessMode();
     }
     private void loadRewardedVideoAd() {
-        mRewardedVideoAd.loadAd("ca-app-pub-6463832285749725/4575101960",//My ID
-                new AdRequest.Builder().build());
-        //mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",//Test ID
-        //                new AdRequest.Builder().build());
+//        mRewardedVideoAd.loadAd("ca-app-pub-6463832285749725/4575101960",//My ID
+//                new AdRequest.Builder().build());
+        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",//Test ID
+                        new AdRequest.Builder().build());
     }
     public void endlessMode() {
         setContentView(R.layout.activity_main);
@@ -118,10 +118,6 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha; // 0.0~1.0
         getWindow().setAttributes(lp);
-    }
-
-    public void Next(View view) {
-        gameView.startGame();
     }
 
     public void start(View view) {
@@ -175,14 +171,6 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                 mDialog.dismiss();
             }
         });
-        /*
-        btnPause = (ImageButton) findViewById(R.id.btnPause);
-        btnPause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //showpopupWindow(v);// 显示PopupWindow
-            }
-        });*/
     }
 
     public static int getWidth() {

@@ -54,25 +54,9 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-6463832285749725/5217852376">
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
     </com.google.android.gms.ads.AdView>
 
     <!--ads:adUnitId="ca-app-pub-6463832285749725/5217852376">--> <!--my id-->
     <!-- ads:adUnitId="ca-app-pub-3940256099942544/6300978111"--> <!--test id-->
-    <!--
-    <ImageButton
-        android:id="@+id/btnPause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@android:color/transparent"
-        android:src="@mipmap/ic_menu"/>
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="Next"
-            android:layout_margin="10dp"
-            android:src="@mipmap/ic_next"
-            android:background="@color/transparent"/>-->
 </RelativeLayout>
