@@ -1,18 +1,15 @@
 package com.example.zihan.grid;
 
 import android.content.Context;
-//import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
 public class Cell extends FrameLayout {
-    String TAG="Cell";
     public View view;
     public int i;
     public int j;
     public boolean visited;
     public boolean block=false;
-    public boolean isHint=false;
 
     public Cell(Context context) {
         super(context);

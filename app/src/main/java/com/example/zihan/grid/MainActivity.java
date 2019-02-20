@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     private Context mcontext;
     private ImageButton btnWidthMinus;
     private ImageButton btnWidthPlus;
-    private ImageButton btnPause;
     private int marginLeft;
     private int marginRight;
 
@@ -292,8 +291,8 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     public void tutorial(View view) {
         width=3;
         setContentView(R.layout.activity_tutorial);
-        stubGuideSlide = (ViewStub) findViewById(R.id.guide_root_slide);
-        tutorialGameView=(GameView)findViewById(R.id.tutorialGameView);
+        stubGuideSlide = findViewById(R.id.guide_root_slide);
+        tutorialGameView = findViewById(R.id.tutorialGameView);
 
         builder = new CustomDialog.Builder(this);
         showTwoButtonDialog( getResources().getString(R.string.levelClear),
@@ -318,9 +317,9 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
         try {
             final View guideSlideView = stubGuideSlide.inflate();
-            RelativeLayout rl = (RelativeLayout) guideSlideView.findViewById(R.id.guide_root);
+            RelativeLayout rl =  guideSlideView.findViewById(R.id.guide_root);
 
-            finger=(ImageView)findViewById(R.id.ivFinger);
+            finger = findViewById(R.id.ivFinger);
             if (rl != null) {
                 rl.setOnClickListener(new View.OnClickListener() {
                     @Override
